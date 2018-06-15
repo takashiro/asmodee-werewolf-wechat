@@ -1,18 +1,18 @@
 <!--index.wxml-->
 <view class="container">
-    <view class="header">
-        <image class="logo" src="../logo.png" />
-    </view>
-    <view class="lobby">
-        <button>创建房间</button>
-        <input class="room-number" type="number" auto-focus placeholder="房间号" />
-        <button>进入房间</button>
-    </view>
-	<view class="footer">
-		<text class="copyright">
+  <view class="header">
+    <image class="logo" src="../logo.png" />
+  </view>
+  <view class="lobby">
+    <button>创建房间</button>
+    <input class="room-number" type="number" auto-focus placeholder="房间号" confirm-type="go" bindblur="inputRoomNumber" bindconfirm="enterRoom" />
+    <button bindtap="enterRoom">进入房间</button>
+  </view>
+  <view class="footer">
+    <text class="copyright">
 			Werewolves of Miller's Hollow
 			Designed by Netease Game
 			Authored by Kazuichi Takashiro © 2017 - 2018
 		</text>
-	</view>
+  </view>
 </view>

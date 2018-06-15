@@ -1,0 +1,33 @@
+<import src="../role-list.wxml" />
+
+<view class="container">
+  <view class="header">
+    <image class="logo" src="../logo.png" />
+  </view>
+  <view class="room">
+    <text class="info">房间号 {{room.id}}</text>
+
+    <view class="team" wx:for="{{teams}}" wx:key="team-{item.team.id}">
+      <text class="header">{{item.team.name}}</text>
+      <template is="role-list" data="{{roles: item.roles}}" />
+    </view>
+
+    <view class="role-viewer">
+      <input type="number" placeholder="座位号" />
+      <button>查看身份</button>
+    </view>
+    <view class="role-viewer">
+      <text class="header">你的身份</text>
+      <text>8号位 预言家</text>
+      <image class="role" src="../../../style/role/seer.jpg" />
+    </view>
+  </view>
+
+  <view class="footer">
+    <text class="copyright">
+			Werewolves of Miller's Hollow
+			Designed by Netease Game
+			Authored by Kazuichi Takashiro © 2017 - 2018
+		</text>
+  </view>
+</view>

@@ -1,36 +1,18 @@
 
-.container {
-    background: url(https://werewolf.takashiro.me/style/bg.jpg) no-repeat;
-    background-size: 100% auto;
-}
-
-view.header {
-    text-align: center;
-    height: 74px;
-    width: 100%;
-}
-
-view.header image.logo {
-    width: 200px;
-    height: 74px;
-    display: inline-block;
-}
-
 .lobby {
-    margin: 50px auto;
-    width: 80%;
-    text-align: center;
+  margin: 50px auto;
+  width: 80%;
+  text-align: center;
 }
 
-.lobby button,
-.lobby input.room-number {
-    margin: 2em auto;
-    line-height: 2.5em;
-    height: 2.5em;
-    box-sizing: border-box;
-    width: 75%;
-		box-shadow: #160804 1px 1px 6px 0;
-		padding: 0 0.5em;
-		display: block;
-		font-size: 15pt;
+.lobby button, .lobby input.room-number {
+  margin: 2em auto;
+  line-height: 2.5em;
+  height: 2.5em;
+  box-sizing: border-box;
+  width: 75%;
+  box-shadow: #160804 1px 1px 6px 0;
+  padding: 0 0.5em;
+  display: block;
+  font-size: 15pt;
 }
