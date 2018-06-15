@@ -1,0 +1,23 @@
+
+view.role {
+  width: 64px;
+  height: 90px;
+  font-size: 11pt;
+  margin: 3px;
+}
+
+view.role view.icon {
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border-radius: 32px;
+  position: relative;
+}
+
+view.role view.icon image {
+  width: 80px;
+  height: 112px;
+  position: absolute;
+  top: -9px;
+  left: -7px;
+}
