@@ -2,19 +2,25 @@
 import Role from '../../game/Role';
 import Team from '../../game/Team';
 
+function parseStorageData(data) {
+  const room = data;
+  const roles = room.roles.map(id => Role.fromNum(id));
+  const teams = [];
+
+  for (const team of Team.List) {
+    teams.push({
+      team: team,
+      roles: roles.filter(role => role.team === team),
+    });
+  }
+
+  return {room, teams};
+}
+
 Page({
   data: {
     room: {},
-    teams: [
-      {
-        team: Team.Werewolf,
-        roles: [Role.Werewolf, Role.Werewolf],
-      },
-      {
-        team: Team.Villager,
-        roles: [Role.Villager, Role.Seer],
-      },
-    ],
+    teams: [],
   },
 
   onLoad: function (options) {
@@ -22,9 +28,7 @@ Page({
     let room = wx.getStorage({
       key: salt,
       success: res => {
-        this.setData({
-          room: res.data
-        });
+        this.setData(parseStorageData(res.data));
       },
       fail: () => {
         wx.showToast({
