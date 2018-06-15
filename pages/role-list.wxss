@@ -1,0 +1,13 @@
+
+view.role-list {
+  display: block;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+view.role-list > view.role {
+  display: inline-block;
+  text-align: center;
+}
+
+@import "role-icon.wxss";
