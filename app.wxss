@@ -1,0 +1,28 @@
+
+.container {
+    height: 100vh;
+    padding: 60rpx 0;
+    box-sizing: border-box;
+}
+
+button {
+    background: #e3ad58;
+    color: #130502;
+    font-weight: bold;
+    border-radius: 4px;
+    box-shadow:#160804 2px 2px 6px 0;
+    text-align: center;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"] {
+    background: white;
+}
+
+view.footer {
+    font-size: 8pt;
+    text-align: right;
+    color: #c3bbb9;
+    padding: 50px 20px 10px 20px;
+}
