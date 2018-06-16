@@ -1,4 +1,3 @@
-//index.js
 //获取应用实例
 const app = getApp();
 
@@ -22,6 +21,9 @@ Page({
       return;
     }
 
+    wx.showLoading({
+      title: '加载中……',
+    });
     wx.request({
       url: 'https://werewolf.takashiro.me/api/enterroom',
       data: { id: roomId },
