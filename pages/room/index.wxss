@@ -22,32 +22,4 @@ text.header {
   margin: 12px auto;
 }
 
-view.role-viewer {
-  margin: 10px 0;
-  font-size: 11pt;
-}
-
-view.role-viewer input[type="number"],
-view.role-viewer button {
-  width: 8em;
-  height: 2.8em;
-  line-height: 2.8em;
-  border-radius: 5px;
-  box-sizing: border-box;
-  padding: 0;
-  margin: 10px auto;
-  display: block;
-  font-size: 11.5pt;
-}
-
-view.role-viewer text {
-  display: block;
-}
-
-view.role-viewer image.role {
-  width: 210px;
-  height: 300px;
-  margin: 15px;
-}
-
 @import "../role-list.wxss";

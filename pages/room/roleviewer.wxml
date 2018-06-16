@@ -1,0 +1,11 @@
+<view class="role-viewer">
+  <text class="header">你的身份</text>
+  <block wx:if="{{!role}}">
+    <input class="seat-number" type="number" placeholder="座位号" />
+    <button class="view-button">查看身份</button>
+  </block>
+  <block wx:else>
+    <text class="identity">{{seat}}号位 {{role.name}}</text>
+    <image class="role" src="/style/role/{{icon}}.jpg" />
+  </block>
+</view>

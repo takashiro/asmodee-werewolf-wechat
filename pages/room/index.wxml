@@ -12,15 +12,7 @@
       <template is="role-list" data="{{roles: item.roles}}" />
     </view>
 
-    <view class="role-viewer">
-      <input type="number" placeholder="座位号" />
-      <button>查看身份</button>
-    </view>
-    <view class="role-viewer">
-      <text class="header">你的身份</text>
-      <text>8号位 预言家</text>
-      <image class="role" src="../../../style/role/seer.jpg" />
-    </view>
+    <RoleViewer room-id="{{room.id}}" />
   </view>
 
   <view class="footer">

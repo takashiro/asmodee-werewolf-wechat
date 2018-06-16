@@ -8,9 +8,14 @@ function parseStorageData(data) {
   const teams = [];
 
   for (const team of Team.List) {
+    let team_roles = roles.filter(role => role.team === team);
+    if (team_roles.length <= 0) {
+      continue;
+    }
+
     teams.push({
       team: team,
-      roles: roles.filter(role => role.team === team),
+      roles: team_roles,
     });
   }
 
@@ -21,10 +26,11 @@ Page({
   data: {
     room: {},
     teams: [],
+    role: null,
   },
 
   onLoad: function (options) {
-    let salt = options.salt || 'WernB3Qp';
+    let salt = options.salt || 'ZNTLcDGk';
     let room = wx.getStorage({
       key: salt,
       success: res => {
