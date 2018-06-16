@@ -13,6 +13,10 @@
     </view>
 
     <RoleViewer room-id="{{room.id}}" />
+
+    <view class="button-area">
+      <button bindtap="handleReturn">返回</button>
+    </view>
   </view>
 
   <view class="footer">

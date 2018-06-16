@@ -43,4 +43,8 @@ Page({
       },
     })
   },
+
+  handleReturn: function () {
+    wx.navigateBack();
+  },
 });
