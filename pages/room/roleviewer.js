@@ -1,5 +1,6 @@
 
 import Role from '../../game/Role';
+import Session from '../../util/Session';
 
 const App = getApp();
 const ServerUrl = App.globalData.ServerUrl;
@@ -12,8 +13,10 @@ const ERROR_MESSAGE = {
   ROOM_FULL: '房间人数已满。'
 };
 
+const room = wx.getStorageSync('room');
+const session = new Session(room.salt);
+
 const input = {
-  roomId: 0,
   seat: 0,
 };
 
@@ -22,13 +25,6 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    roomId: {
-      type: Number,
-      value: 0,
-      observer: function(newVal) {
-        input.roomId = newVal;
-      }
-    },
   },
 
   /**
@@ -47,8 +43,35 @@ Component({
       input.seat = parseInt(e.detail.value, 10);
     },
 
+    showRole: function (role, cards) {
+      if (role === 0) {
+        wx.showToast({
+          title: '该座位已使用，请重新输入。',
+          icon: 'none'
+        });
+        this.setData({state: 'init'});
+        return;
+      }
+
+      role = Role.fromNum(role);
+
+      if (cards && cards instanceof Array) {
+        cards = cards.map(card => Role.fromNum(card));
+      } else {
+        cards = [];
+      }
+
+      this.setData({
+        state: 'loaded',
+        seat: input.seat,
+        role: role,
+        icon: role.key.toLowerCase(),
+        cards: cards
+      });
+    },
+
     fetchRole: function () {
-      let roomId = input.roomId;
+      let roomId = room.id;
       if (roomId <= 0 || isNaN(roomId)) {
         wx.showToast({
           title: '房间号错误。',
@@ -67,8 +90,7 @@ Component({
       }
 
       this.setData({state: 'loading'});
-
-      let seatKey = Math.floor(Math.random() * 0xFFFF) + 1;
+      session.save();
 
       wx.request({
         method: 'POST',
@@ -76,7 +98,7 @@ Component({
         data: {
           id: roomId,
           seat: seat,
-          key: seatKey
+          key: session.roomKey
         },
         success: res => {
           if (res.statusCode != 200) {
@@ -98,19 +120,11 @@ Component({
             return;
           }
 
-          let role = Role.fromNum(result.role);
-          let cards = [];
-          if (result.cards && result.cards instanceof Array) {
-            cards = result.cards.map(card => Role.fromNum(card));
-          }
+          session.role = result.role;
+          session.cards = result.cards;
+          session.save();
 
-          this.setData({
-            state: 'loaded',
-            seat: seat,
-            role: role,
-            icon: role.key.toLowerCase(),
-            cards: cards
-          });
+          this.showRole(session.role, session.cards);
         },
         fail: () => {
           wx.showToast({
