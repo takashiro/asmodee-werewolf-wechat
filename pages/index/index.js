@@ -12,6 +12,12 @@ Page({
     roomId = parseInt(e.detail.value, 10);
   },
 
+  createRoom: function () {
+    wx.navigateTo({
+      url: '../room-creator/index',
+    });
+  },
+
   enterRoom: function () {
     if (!roomId) {
       wx.showToast({
