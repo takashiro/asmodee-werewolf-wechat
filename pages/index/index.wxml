@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
   <view class="header">
-    <image class="logo" src="../logo.png" />
+    <image class="logo" src="/style/logo.png" />
   </view>
   <view class="lobby">
     <button>创建房间</button>

@@ -2,7 +2,7 @@
 
 <view class="container">
   <view class="header">
-    <image class="logo" src="../logo.png" />
+    <image class="logo" src="/style/logo.png" />
   </view>
   <view class="room">
     <text class="info">房间号 {{room.id}}</text>
