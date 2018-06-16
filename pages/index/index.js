@@ -36,7 +36,7 @@ Page({
           });
         } else {
           wx.setStorage({
-            key: room.salt,
+            key: 'room',
             data: room,
             success: function () {
               wx.navigateTo({

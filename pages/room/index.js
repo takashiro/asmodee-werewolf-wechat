@@ -30,9 +30,8 @@ Page({
   },
 
   onLoad: function (options) {
-    let salt = options.salt || 'ZNTLcDGk';
     let room = wx.getStorage({
-      key: salt,
+      key: 'room',
       success: res => {
         this.setData(parseStorageData(res.data));
       },
