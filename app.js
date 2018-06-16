@@ -3,6 +3,6 @@ App({
   onLaunch: function () {
   },
   globalData: {
-    userInfo: null
+    ServerUrl: 'https://werewolf.takashiro.me/api',
   }
-})
+});

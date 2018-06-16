@@ -11,6 +11,10 @@
   margin: 12px auto;
 }
 
+.seat-number {
+  color: black;
+}
+
 .seat-number,
 .view-button {
   width: 8em;
