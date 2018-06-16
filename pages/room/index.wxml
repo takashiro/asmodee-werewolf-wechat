@@ -1,9 +1,8 @@
+<import src="../global.wxml" />
 <import src="../role-list.wxml" />
 
 <view class="container">
-  <view class="header">
-    <image class="logo" src="/style/logo.png" />
-  </view>
+  <template is="header" />
   <view class="room">
     <text class="info">房间号 {{room.id}}</text>
 
@@ -19,11 +18,5 @@
     </view>
   </view>
 
-  <view class="footer">
-    <text class="copyright">
-			Werewolves of Miller's Hollow
-			Designed by Netease Game
-			Authored by Kazuichi Takashiro © 2017 - 2018
-		</text>
-  </view>
+  <template is="footer" />
 </view>

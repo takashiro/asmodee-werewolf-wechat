@@ -1,0 +1,15 @@
+<template name="header">
+  <view class="header">
+    <image class="logo" src="/style/logo.png" />
+  </view>
+</template>
+
+<template name="footer">
+  <view class="footer">
+    <text class="copyright">
+			Werewolves of Miller's Hollow
+			Designed by Netease Game
+			Authored by Kazuichi Takashiro © 2017 - 2018
+		</text>
+  </view>
+</template>
