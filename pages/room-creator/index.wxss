@@ -1,3 +1,16 @@
 
 @import "../team-selector.wxss";
 @import "../role-list.wxss";
+
+.role-number-selector {
+  height: 90px;
+  position: relative;
+  padding-left: 100px;
+  font-size: 9pt;
+}
+
+.role-number-selector view.role {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

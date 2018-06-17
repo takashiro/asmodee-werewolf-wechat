@@ -1,0 +1,5 @@
+<view class="number-input">
+  <button class="decrease-button"></button>
+  <input class="input" type="number" value="0" />
+  <button class="increase-button"></button>
+</view>

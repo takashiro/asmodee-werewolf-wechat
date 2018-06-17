@@ -4,7 +4,10 @@
 <template name="team-selector">
   <view class="team">
     <text class="header">{{team.name}}</text>
-    <template is="role-icon" data="{{key: basic.key, name: basic.name}}" wx:if="{{basic}}" />
+    <view class="role-number-selector" wx:if="{{basic}}">
+      <template is="role-icon" data="{{key: basic.key, name: basic.name}}" />
+      <NumberInput />
+    </view>
     <view class="role-list">
       <block wx:for="{{roles}}" wx:key="role-{{item.id}}">
         <RoleButton role="{{item.value}}" icon="{{item.key}}" name="{{item.name}}" />
