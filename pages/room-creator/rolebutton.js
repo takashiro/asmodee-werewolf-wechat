@@ -33,7 +33,12 @@ Component({
    */
   methods: {
     handleTap: function () {
-      this.setData({selected: !this.data.selected});
+      let selected = !this.data.selected;
+      this.setData({selected: selected});
+      this.triggerEvent('numberchange', {
+        role: this.data.role,
+        value: selected ? 1 : 0,
+      });
     },
   }
 })
