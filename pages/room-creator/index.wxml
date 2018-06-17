@@ -5,12 +5,12 @@
   <view class="team">
     <text class="header">{{team.name}}</text>
     <view class="role-number-selector" wx:if="{{basic}}">
-      <template is="role-icon" data="{{key: basic.key, name: basic.name}}" />
-      <NumberInput role="{{basic.value}}" value="3" bindnumberchange="handleRoleChange" />
+      <template is="role-icon" data="{{key: basic.role.key, name: basic.role.name}}" />
+      <NumberInput role="{{basic.role.value}}" value="{{basic.num}}" bindnumberchange="handleRoleChange" />
     </view>
     <view class="role-list">
-      <block wx:for="{{roles}}" wx:key="role-{{item.id}}">
-        <RoleButton role="{{item.value}}" icon="{{item.key}}" name="{{item.name}}" bindnumberchange="handleRoleChange" />
+      <block wx:for="{{roles}}" wx:key="role-{{item.role.id}}">
+        <RoleButton role="{{item.role.value}}" icon="{{item.role.key}}" name="{{item.role.name}}" selected="{{item.num}}" bindnumberchange="handleRoleChange" />
       </block>
     </view>
   </view>
