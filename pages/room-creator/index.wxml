@@ -24,7 +24,7 @@
 
   <view class="button-area">
     <button>返回</button>
-    <button>创建房间</button>
+    <button bindtap="createRoom">创建房间</button>
   </view>
 
   <template is="footer" />

@@ -15,6 +15,26 @@ for (const selector of selectors) {
 
 let roleConfig = new Map;
 
+function restoreRoleConfig() {
+}
+
+function saveRoleConfig() {
+  let config = [];
+  for (let [role, num] of roleConfig) {
+    if (num <= 0) {
+      continue;
+    }
+    config.push({
+      role: role,
+      num: num,
+    });
+  }
+  wx.setStorage({
+    key: 'roleConfig',
+    data: config,
+  });
+}
+
 Page({
   data: {
     selectors
@@ -22,5 +42,9 @@ Page({
 
   handleRoleChange: function (e) {
     roleConfig.set(e.detail.role, e.detail.value);
+  },
+
+  createRoom: function () {
+    saveRoleConfig();
   },
 });
