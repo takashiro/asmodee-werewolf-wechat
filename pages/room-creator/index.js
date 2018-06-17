@@ -13,13 +13,14 @@ for (const selector of selectors) {
   );
 }
 
-let input = new Map;
+let roleConfig = new Map;
 
 Page({
   data: {
     selectors
   },
 
-  onButtonClick: function (e) {
+  handleRoleChange: function (e) {
+    roleConfig.set(e.detail.role, e.detail.value);
   },
 });

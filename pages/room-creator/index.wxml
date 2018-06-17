@@ -6,7 +6,7 @@
     <text class="header">{{team.name}}</text>
     <view class="role-number-selector" wx:if="{{basic}}">
       <template is="role-icon" data="{{key: basic.key, name: basic.name}}" />
-      <NumberInput value="3" />
+      <NumberInput role="{{basic.value}}" value="3" bindnumberchange="handleRoleChange" />
     </view>
     <view class="role-list">
       <block wx:for="{{roles}}" wx:key="role-{{item.id}}">
