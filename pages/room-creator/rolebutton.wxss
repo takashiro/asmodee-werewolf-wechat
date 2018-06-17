@@ -1,7 +1,6 @@
 
 @import '../role-icon.wxss';
 
-
 .role-button {
   display: inline-block;
   width: 64px;
@@ -14,7 +13,17 @@
   font-weight: normal;
   padding: 0;
   text-align: center;
-  margin: 0 3px;
+  margin: 0 7px;
+}
+
+.role-button .role {
+  margin: 0;
+}
+
+@media screen and (max-width: 375px) {
+	.role-button {
+		margin: 0 3px;
+	}
 }
 
 .role-button.selected .role .icon {

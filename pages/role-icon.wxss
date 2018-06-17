@@ -3,7 +3,13 @@ view.role {
   width: 64px;
   height: 90px;
   font-size: 11pt;
-  margin: 3px;
+  margin: 0 7px;
+}
+
+@media screen and (max-width: 375px) {
+  view.role {
+		margin: 0 3px;
+	}
 }
 
 view.role view.icon {
