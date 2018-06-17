@@ -1,6 +1,7 @@
 
 import Role from '../../game/Role';
 import Team from '../../game/Team';
+import Session from '../../util/Session';
 
 function parseStorageData(data) {
   const room = data;
@@ -19,12 +20,19 @@ function parseStorageData(data) {
     });
   }
 
-  return {room, teams};
+  let session = new Session(room.salt);
+
+  return {
+    room,
+    teams,
+    session,
+  };
 }
 
 Page({
   data: {
     room: {},
+    session: null,
     teams: [],
     role: null,
   },

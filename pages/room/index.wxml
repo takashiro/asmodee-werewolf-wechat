@@ -11,7 +11,7 @@
       <template is="role-list" data="{{roles: item.roles}}" />
     </view>
 
-    <RoleViewer />
+    <RoleViewer room-id="{{room.id}}" room-key="{{room.salt}}" />
 
     <view class="button-area">
       <button bindtap="handleReturn">返回</button>

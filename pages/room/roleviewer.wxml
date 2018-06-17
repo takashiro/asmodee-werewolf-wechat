@@ -1,5 +1,8 @@
 <view class="role-viewer">
   <text class="header">你的身份</text>
+  <block wx:if="{{state === 'prepare'}}">
+    <text>加载中……</text>
+  </block>
   <block wx:if="{{state === 'init'}}">
     <input class="seat-number" type="number" placeholder="座位号" bindinput="updateSeat" />
     <button class="view-button" bindtap="fetchRole">查看身份</button>
@@ -9,6 +12,6 @@
   </block>
   <block wx:elif="{{state === 'loaded'}}">
     <text class="identity">{{seat}}号位 {{role.name}}</text>
-    <image class="role" src="/style/role/{{icon}}.jpg" />
+    <image class="role" src="/style/role/{{role.key}}.jpg" />
   </block>
 </view>
