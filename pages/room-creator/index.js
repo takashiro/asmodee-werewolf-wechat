@@ -1,6 +1,7 @@
 
 import Role from '../../game/Role';
 import Team from '../../game/Team';
+import Session from '../../util/Session';
 
 const App = getApp();
 const ServerUrl = App.globalData.ServerUrl;
@@ -100,9 +101,18 @@ Page({
       url: ServerUrl + '/createroom',
       data: {roles},
       success: function (res) {
+        let room = res.data;
+
+        if (room.salt && room.ownerKey) {
+          let session = new Session(room.salt);
+          session.ownerKey = room.ownerKey;
+          delete room.ownerKey;
+          session.save();
+        }
+
         wx.setStorage({
           key: 'room',
-          data: res.data,
+          data: room,
           success: function () {
             wx.redirectTo({
               url: '../room/index',

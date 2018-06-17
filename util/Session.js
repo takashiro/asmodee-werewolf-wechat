@@ -37,10 +37,12 @@ class Session {
 
     let session = readSession(roomKey);
     if (session) {
+      this.ownerKey = session.ownerKey;
       this.seatKey = session.seatKey;
       this.role = session.role;
       this.cards = session.cards || [];
     } else {
+      this.ownerKey = null;
       this.seatKey = Math.floor(Math.random() * 0xFFFF) + 1;
       this.role = Role.Unknown;
       this.cards = [];
@@ -50,6 +52,7 @@ class Session {
   save() {
     saveSession({
       roomKey: this.roomKey,
+      ownerKey: this.ownerKey,
       seatKey: this.seatKey,
       role: this.role,
       cards: this.cards,
