@@ -2,6 +2,9 @@
 import Role from '../../game/Role';
 import Team from '../../game/Team';
 
+const App = getApp();
+const ServerUrl = App.globalData.ServerUrl;
+
 const selectors = [
   { team: Team.Werewolf, basic: {role: Role.Werewolf, num: 0}, roles: null },
   { team: Team.Villager, basic: {role: Role.Villager, num: 0}, roles: null },
@@ -81,5 +84,44 @@ Page({
 
   createRoom: function () {
     saveRoleConfig();
-  },
+
+    let roles = [];
+    for (let [role, num] of roleConfig) {
+      for (let i = 0; i < num; i++) {
+        roles.push(role);
+      }
+    }
+
+    wx.showLoading({
+      title: '创建房间……',
+    });
+    wx.request({
+      method: 'POST',
+      url: ServerUrl + '/createroom',
+      data: {roles},
+      success: function (res) {
+        wx.setStorage({
+          key: 'room',
+          data: res.data,
+          success: function () {
+            wx.redirectTo({
+              url: '../room/index',
+            });
+          },
+          fail: function () {
+            wx.showToast({
+              title: '空间不足，存储房间信息失败。',
+              icon: 'none',
+            });
+          },
+        });
+      },
+      fail: function () {
+        wx.showToast({
+          title: '网络状况不佳，请重试。',
+          icon: 'none',
+        });
+      }
+    });
+  }
 });
