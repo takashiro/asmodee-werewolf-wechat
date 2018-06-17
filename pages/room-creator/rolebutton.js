@@ -10,25 +10,30 @@ Component({
     },
     icon: {
       type: String,
-      value: 'witch',
+      value: 'werewolf',
     },
     name: {
       type: String,
-      value: 'Witch',
+      value: 'Takashiro',
     },
+    selected: {
+      type: Boolean,
+      value: false,
+    }
   },
 
   /**
    * 组件的初始数据
    */
   data: {
-
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-
+    handleTap: function () {
+      this.setData({selected: !this.data.selected});
+    },
   }
 })
