@@ -1,1 +1,22 @@
-/* pages/room-creator/index.wxss */
+
+@import "../team-selector.wxss";
+@import "../role-list.wxss";
+
+.role-button {
+  display: inline-block;
+  width: 64px;
+  height: 96px;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: white;
+  font-weight: normal;
+  padding: 0;
+  text-align: center;
+  margin: 0 3px;
+}
+
+.role-button.selected .role {
+  box-shadow: #fed840 0 0 4px 2px;
+}

@@ -1,5 +1,30 @@
 <import src="../global.wxml" />
+<import src="../role-icon.wxml" />
+
+<template name="team-selector">
+  <view class="team">
+    <text class="header">{{team.name}}</text>
+    <template is="role-icon" data="{{key: basic.key, name: basic.name}}" wx:if="{{basic}}" />
+    <view class="role-list">
+      <block wx:for="{{roles}}" wx:key="role-{{item.id}}">
+        <view class="role-button" bindtap="onButtonClick" data-role="{{item.value}}">
+          <template is="role-icon" data="{{...item}}" />
+        </view>
+      </block>
+    </view>
+  </view>
+</template>
+
 <view class="container">
   <template is="header" />
+  <block wx:for="{{selectors}}" wx:key="team-selector-{{item.team}}">
+    <template is="team-selector" data="{{...item}}" />
+  </block>
+
+  <view class="button-area">
+    <button>返回</button>
+    <button>创建房间</button>
+  </view>
+
   <template is="footer" />
 </view>

@@ -1,0 +1,13 @@
+
+view.team {
+  color: white;
+  text-align: center;
+  margin: 5px 12px 10px 12px;
+}
+
+view.team > text.header {
+  font-size: 12pt;
+  font-weight: bold;
+  display: block;
+  margin: 12px auto;
+}

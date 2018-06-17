@@ -43,7 +43,9 @@ view.button-area {
   margin: 35px 0 5px 0;
 }
 
-view.button-area {
-  width: 4em;
+view.button-area button {
+  width: auto;
+  min-width: 6em;
   display: inline-block;
+  margin: 0 1em;
 }

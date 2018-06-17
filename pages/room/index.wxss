@@ -9,17 +9,6 @@ text.info {
   margin: 20px 0;
 }
 
-view.team {
-  color: white;
-  text-align: center;
-  margin: 5px 12px 10px 12px;
-}
-
-text.header {
-  font-size: 12pt;
-  font-weight: bold;
-  display: block;
-  margin: 12px auto;
-}
+@import "../team-selector.wxss";
 
 @import "../role-list.wxss";
