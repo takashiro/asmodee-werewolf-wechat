@@ -7,9 +7,7 @@
     <template is="role-icon" data="{{key: basic.key, name: basic.name}}" wx:if="{{basic}}" />
     <view class="role-list">
       <block wx:for="{{roles}}" wx:key="role-{{item.id}}">
-        <view class="role-button" bindtap="onButtonClick" data-role="{{item.value}}">
-          <template is="role-icon" data="{{...item}}" />
-        </view>
+        <RoleButton role="{{item.value}}" icon="{{item.key}}" name="{{item.name}}" />
       </block>
     </view>
   </view>
