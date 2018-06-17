@@ -83,6 +83,10 @@ Page({
     roleConfig.set(e.detail.role, e.detail.value);
   },
 
+  handleReturn: function () {
+    wx.navigateBack();
+  },
+
   createRoom: function () {
     saveRoleConfig();
 
@@ -101,6 +105,7 @@ Page({
       url: ServerUrl + '/createroom',
       data: {roles},
       success: function (res) {
+        wx.hideLoading();
         let room = res.data;
 
         if (room.salt && room.ownerKey) {
@@ -127,6 +132,7 @@ Page({
         });
       },
       fail: function () {
+        wx.hideLoading();
         wx.showToast({
           title: '网络状况不佳，请重试。',
           icon: 'none',

@@ -34,20 +34,7 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": [
-				{
-					"id": 0,
-					"name": "进入房间",
-					"pathName": "pages/room/index",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "创建房间",
-					"pathName": "pages/room-creator/index",
-					"query": ""
-				}
-			]
+			"list": []
 		}
 	}
 }

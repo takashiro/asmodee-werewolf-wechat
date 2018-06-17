@@ -46,7 +46,7 @@ class Session {
       this.ownerKey = null;
       this.seat = 0;
       this.seatKey = Math.floor(Math.random() * 0xFFFF) + 1;
-      this.role = Role.Unknown;
+      this.role = null;
       this.cards = [];
     }
   }
