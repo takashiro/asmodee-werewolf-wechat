@@ -3,6 +3,6 @@ App({
   onLaunch: function () {
   },
   globalData: {
-    ServerUrl: 'https://werewolf.takashiro.me/api',
+    ServerUrl: 'https://werewolf.takashiro.cn/api',
   }
 });
