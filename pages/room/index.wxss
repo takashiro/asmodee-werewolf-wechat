@@ -6,7 +6,8 @@ view.room {
 
 text.info {
   font-size: 11pt;
-  margin: 20px 0;
+  margin: 20px auto;
+  display: block;
 }
 
 @import "../team-selector.wxss";

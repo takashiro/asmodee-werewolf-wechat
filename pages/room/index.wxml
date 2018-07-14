@@ -3,6 +3,7 @@
 
 <view class="container">
   <template is="header" />
+
   <view class="room">
     <text class="info">房间号 {{room.id}}</text>
 
@@ -15,6 +16,7 @@
 
     <view class="button-area">
       <button bindtap="handleReturn">返回</button>
+      <button open-type="share">邀请好友</button>
     </view>
   </view>
 
