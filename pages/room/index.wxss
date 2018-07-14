@@ -10,6 +10,10 @@ text.info {
   display: block;
 }
 
+view.button-area {
+  margin-top: 64px;
+}
+
 @import "../team-selector.wxss";
 
 @import "../role-list.wxss";
