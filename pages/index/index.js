@@ -7,6 +7,15 @@ let roomId = 0;
 Page({
   data: {
   },
+
+  onLoad: function (options) {
+    if (options.room_id) {
+      roomId = parseInt(options.room_id, 10) || 0;
+      if (roomId) {
+        this.enterRoom();
+      }
+    }
+  },
   
   //事件处理函数
   inputRoomNumber: function (e) {

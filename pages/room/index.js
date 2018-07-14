@@ -55,4 +55,13 @@ Page({
   handleReturn: function () {
     wx.navigateBack();
   },
+
+  onShareAppMessage: function () {
+    let room = this.data.room;
+    return {
+      title: '狼人杀房间 ' + room.id + '号',
+      desc: '查看身份牌，悍跳自爆撕警徽',
+      path: '/pages/index/index?room_id=' + room.id,
+    };
+  },
 });
