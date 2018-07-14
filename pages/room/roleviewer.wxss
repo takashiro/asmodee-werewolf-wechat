@@ -2,6 +2,7 @@
 .role-viewer {
   margin: 10px 0;
   font-size: 11pt;
+  position: relative;
 }
 
 .header {
@@ -32,8 +33,29 @@
   display: block;
 }
 
-.role {
+.role-viewer > image.role {
   width: 200px;
   height: 286px;
   margin: 15px;
+}
+
+@import "../role-list.wxss";
+
+.role-viewer .role-list {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.role-viewer .role-list view.role:nth-child(2n+1) {
+ float: left;
+ display: block;
+}
+
+.role-viewer .role-list view.role:nth-child(2n) {
+  float: right;
+  display: block;
 }
