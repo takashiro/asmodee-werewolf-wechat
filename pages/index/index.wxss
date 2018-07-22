@@ -6,7 +6,7 @@
 }
 
 .lobby button, .lobby input.room-number {
-  margin: 2em auto;
+  margin: 0 auto;
   line-height: 2.5em;
   height: 2.5em;
   box-sizing: border-box;
@@ -15,4 +15,13 @@
   padding: 0 0.5em;
   display: block;
   font-size: 15pt;
+  border-radius: 6px;
+}
+
+.lobby view.create-panel {
+  margin-bottom: 3.5em;
+}
+
+.lobby view.enter-panel button {
+  margin: 1.8em auto;
 }

@@ -2,9 +2,13 @@
 <view class="container">
   <template is="header" />
   <view class="lobby">
-    <button bindtap="createRoom">创建房间</button>
+    <view class="create-panel">
+      <button bindtap="createRoom">创建房间</button>
+    </view>
+    <view class="enter-panel">
     <input class="room-number" type="number" auto-focus placeholder="房间号" confirm-type="go" bindinput="inputRoomNumber" bindconfirm="enterRoom" />
     <button bindtap="enterRoom">进入房间</button>
+    </view>
   </view>
   <template is="footer" />
 </view>
