@@ -89,5 +89,14 @@ Page({
         });
       },
     });
-  }
+  },
+
+  onShareAppMessage: function () {
+    let room = this.data.room;
+    return {
+      title: '狼人杀上帝助手',
+      desc: '支持包含盗贼在内的23种特殊角色，邀请好友线下面杀吧！',
+      path: '/pages/index/index',
+    };
+  },
 });
