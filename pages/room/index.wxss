@@ -14,6 +14,12 @@ view.button-area {
   margin-top: 64px;
 }
 
+view.room text.message {
+  margin: 3em auto;
+  display: block;
+  font-size: 12pt;
+}
+
 @import "../team-selector.wxss";
 
 @import "../role-list.wxss";

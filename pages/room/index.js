@@ -3,6 +3,9 @@ import Role from '../../game/Role';
 import Team from '../../game/Team';
 import Session from '../../util/Session';
 
+const app = getApp();
+const ServerUrl = app.globalData.ServerUrl;
+
 function parseStorageData(data) {
   const room = data;
   const roles = room.roles.map(id => Role.fromNum(id));
@@ -23,6 +26,7 @@ function parseStorageData(data) {
   let session = new Session(room.salt);
 
   return {
+    status: 1,
     room,
     teams,
     session,
@@ -31,6 +35,7 @@ function parseStorageData(data) {
 
 Page({
   data: {
+    status: 0,
     room: {},
     session: null,
     teams: [],
@@ -38,22 +43,52 @@ Page({
   },
 
   onLoad: function (options) {
-    let room = wx.getStorage({
-      key: 'room',
-      success: res => {
-        this.setData(parseStorageData(res.data));
-      },
-      fail: () => {
-        wx.showToast({
-          title: '读取房间信息失败。',
-          icon: 'none',
-        });
-      },
-    })
+    if (options.room_id) {
+      let room_id = parseInt(options.room_id, 10) || 0;
+      if (room_id <= 0) {
+        this.setData({status: 2});
+        return;
+      }
+
+      wx.request({
+        url: ServerUrl + '/enterroom',
+        data: { id: room_id },
+        method: 'POST',
+        success: res => {
+          let room = res.data;
+          if (!room.id || room.id <= 0) {
+            this.setData({status: 2});
+            return;
+          }
+
+          this.setData(parseStorageData(room));
+        }
+      })
+    } else {
+      let room = wx.getStorage({
+        key: 'room',
+        success: res => {
+          this.setData(parseStorageData(res.data));
+        },
+        fail: () => {
+          wx.showToast({
+            title: '读取房间信息失败。',
+            icon: 'none',
+          });
+        },
+      })
+    }
   },
 
   handleReturn: function () {
-    wx.navigateBack();
+    let pages = getCurrentPages();
+    if (pages.length >= 2) {
+      wx.navigateBack();
+    } else {
+      wx.redirectTo({
+        url: '../index/index',
+      });
+    }
   },
 
   onShareAppMessage: function () {
@@ -61,7 +96,7 @@ Page({
     return {
       title: '狼人杀房间 ' + room.id + '号',
       desc: '查看身份牌，悍跳自爆撕警徽',
-      path: '/pages/index/index?room_id=' + room.id,
+      path: '/pages/room/index?room_id=' + room.id,
     };
   },
 });
