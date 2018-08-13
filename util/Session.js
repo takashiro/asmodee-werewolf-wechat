@@ -1,6 +1,4 @@
 
-import Role from '../game/Role';
-
 function readSession(roomKey) {
   let sessions = wx.getStorageSync('sessions');
   if (sessions && sessions instanceof Array) {
