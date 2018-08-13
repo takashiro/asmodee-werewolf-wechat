@@ -24,11 +24,12 @@ let roleConfig = new Map;
 function restoreRoleConfig() {
   let configs = wx.getStorageSync('roleConfig');
   if (!configs || !(configs instanceof Array)) {
-    roleConfig.set(Role.Werewolf, 4);
-    roleConfig.set(Role.Villager, 4);
-    roleConfig.set(Role.Seer, 4);
-    roleConfig.set(Role.Witch, 1);
-    roleConfig.set(Role.Hunter, 1);
+    roleConfig.set(Role.Werewolf.value, 4);
+    roleConfig.set(Role.Villager.value, 4);
+    roleConfig.set(Role.Seer.value, 1);
+    roleConfig.set(Role.Witch.value, 1);
+    roleConfig.set(Role.Hunter.value, 1);
+    roleConfig.set(Role.Guard.value, 1);
   } else {
     for (let config of configs) {
       roleConfig.set(config.role, config.num);
