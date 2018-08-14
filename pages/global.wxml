@@ -6,6 +6,9 @@
 
 <template name="footer">
   <view class="footer">
+    <view class="contact-us">
+      <button open-type="contact">反馈问题</button>
+    </view>
     <text class="copyright">
 			Werewolves of Miller's Hollow
 			Designed by Netease Game

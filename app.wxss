@@ -31,6 +31,22 @@ view.footer {
   padding: 50px 20px 10px 20px;
 }
 
+.contact-us {
+  padding-top: 10px;
+  display: inline;
+}
+
+.contact-us button {
+  font-size: 11pt;
+  font-weight: normal;
+  display: inline;
+  color: lightgray;
+  background: none;
+  box-shadow: none;
+  line-height: 2em;
+  padding: 0;
+}
+
 view.button-area {
   text-align: center;
   margin: 35px 0 5px 0;
