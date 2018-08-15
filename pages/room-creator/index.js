@@ -21,15 +21,20 @@ for (const selector of selectors) {
 
 let roleConfig = new Map;
 
+function resetRoleConfig() {
+  roleConfig.clear();
+  roleConfig.set(Role.Werewolf.value, 4);
+  roleConfig.set(Role.Villager.value, 4);
+  roleConfig.set(Role.Seer.value, 1);
+  roleConfig.set(Role.Witch.value, 1);
+  roleConfig.set(Role.Hunter.value, 1);
+  roleConfig.set(Role.Guard.value, 1);
+}
+
 function restoreRoleConfig() {
   let configs = wx.getStorageSync('roleConfig');
   if (!configs || !(configs instanceof Array)) {
-    roleConfig.set(Role.Werewolf.value, 4);
-    roleConfig.set(Role.Villager.value, 4);
-    roleConfig.set(Role.Seer.value, 1);
-    roleConfig.set(Role.Witch.value, 1);
-    roleConfig.set(Role.Hunter.value, 1);
-    roleConfig.set(Role.Guard.value, 1);
+    resetRoleConfig();
   } else {
     for (let config of configs) {
       roleConfig.set(config.role, config.num);
@@ -61,6 +66,10 @@ Page({
 
   onLoad: function (options) {
     restoreRoleConfig();
+    this.refreshSettings();
+  },
+
+  refreshSettings: function () {
     let selectors = [];
     for (let selector of this.data.selectors) {
       if (selector.basic) {
@@ -77,7 +86,7 @@ Page({
 
       selectors.push(selector);
     }
-    this.setData({selectors: selectors});
+    this.setData({ selectors: selectors });
   },
 
   handleRoleChange: function (e) {
@@ -92,10 +101,31 @@ Page({
     saveRoleConfig();
 
     let roles = [];
-    for (let [role, num] of roleConfig) {
-      for (let i = 0; i < num; i++) {
-        roles.push(role);
+    for (let [role_value, num] of roleConfig) {
+      let role = Role.fromNum(role_value);
+      if (role === Role.Unknown) {
+        continue;
       }
+      for (let i = 0; i < num; i++) {
+        roles.push(role_value);
+      }
+    }
+
+    if (roles.length > 50) {
+      resetRoleConfig();
+      saveRoleConfig();
+      this.refreshSettings();
+      wx.showToast({
+        title: '最多仅能支持50人局，请重新选择。',
+        icon: 'none',
+      });
+      return;
+    } else if (roles.length <= 0) {
+      wx.showToast({
+        title: '请选择角色。',
+        icon: 'fail',
+      });
+      return;
     }
 
     wx.showLoading({
@@ -107,6 +137,13 @@ Page({
       data: {roles},
       success: function (res) {
         wx.hideLoading();
+        if (res.statusCode !== 200) {
+          wx.showToast({
+            title: '非常抱歉，服务器临时故障。',
+            icon: 'fail',
+          });
+        }
+
         let room = res.data;
 
         if (room.salt && room.ownerKey) {
