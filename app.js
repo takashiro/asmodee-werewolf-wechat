@@ -2,7 +2,8 @@
 App({
 	onLaunch: function () {
 	},
+
 	globalData: {
-		ServerUrl: 'https://werewolf.takashiro.cn/api',
+		ServerAPI: 'https://werewolf.takashiro.cn/api',
 	}
 });

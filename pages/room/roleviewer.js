@@ -3,7 +3,7 @@ import Role from '../../game/Role';
 import Session from '../../util/Session';
 
 const App = getApp();
-const ServerUrl = App.globalData.ServerUrl;
+const ServerAPI = App.globalData.ServerAPI;
 
 const ERROR_MESSAGE = {
 	ROOM_EXPIRED: '房间不存在，可能已过期。',
@@ -111,7 +111,7 @@ Component({
 
 			wx.request({
 				method: 'POST',
-				url: ServerUrl + '/fetchrole',
+				url: ServerAPI + '/fetchrole',
 				data: {
 					id: roomId,
 					seat: seat,

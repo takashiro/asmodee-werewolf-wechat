@@ -4,7 +4,7 @@ import Team from '../../game/Team';
 import Session from '../../util/Session';
 
 const app = getApp();
-const ServerUrl = app.globalData.ServerUrl;
+const ServerAPI = app.globalData.ServerAPI;
 
 function parseStorageData(data) {
 	const room = data;
@@ -51,7 +51,7 @@ Page({
 			}
 
 			wx.request({
-				url: ServerUrl + '/enterroom',
+				url: ServerAPI + '/enterroom',
 				data: { id: room_id },
 				method: 'POST',
 				success: res => {

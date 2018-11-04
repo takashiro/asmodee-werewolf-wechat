@@ -1,6 +1,6 @@
 //获取应用实例
 const app = getApp();
-const ServerUrl = app.globalData.ServerUrl;
+const ServerAPI = app.globalData.ServerAPI;
 
 let roomId = 0;
 
@@ -47,7 +47,7 @@ Page({
 			title: '加载中……',
 		});
 		wx.request({
-			url: ServerUrl + '/enterroom',
+			url: ServerAPI + '/enterroom',
 			data: { id: roomId },
 			method: 'POST',
 			success: function (res) {

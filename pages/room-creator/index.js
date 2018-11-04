@@ -4,7 +4,7 @@ import Team from '../../game/Team';
 import Session from '../../util/Session';
 
 const App = getApp();
-const ServerUrl = App.globalData.ServerUrl;
+const ServerAPI = App.globalData.ServerAPI;
 
 const selectors = [
 	{ team: Team.Werewolf, basic: { role: Role.Werewolf, num: 0 }, roles: null },
@@ -133,7 +133,7 @@ Page({
 		});
 		wx.request({
 			method: 'POST',
-			url: ServerUrl + '/createroom',
+			url: ServerAPI + '/createroom',
 			data: { roles },
 			success: function (res) {
 				wx.hideLoading();
