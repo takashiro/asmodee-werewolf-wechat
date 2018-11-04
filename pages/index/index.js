@@ -47,15 +47,20 @@ Page({
 			title: '加载中……',
 		});
 		wx.request({
-			url: ServerAPI + '/enterroom',
+			method: 'GET',
+			url: ServerAPI + 'room',
 			data: { id: roomId },
-			method: 'POST',
 			success: function (res) {
 				wx.hideLoading();
 				let room = res.data;
-				if (!room.id || room.id <= 0) {
+				if (res.statusCode === 404 || !room.id || room.id <= 0) {
 					wx.showToast({
 						title: '房间不存在。',
+						icon: 'none',
+					});
+				} else if (res.statusCode !== 200) {
+					wx.showToast({
+						title: '加载房间信息失败。',
 						icon: 'none',
 					});
 				} else {

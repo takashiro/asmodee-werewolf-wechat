@@ -51,12 +51,12 @@ Page({
 			}
 
 			wx.request({
-				url: ServerAPI + '/enterroom',
+				method: 'GET',
+				url: ServerAPI + 'room',
 				data: { id: room_id },
-				method: 'POST',
 				success: res => {
 					let room = res.data;
-					if (!room.id || room.id <= 0) {
+					if (res.statusCode === 404 || !room.id || room.id <= 0) {
 						this.setData({ status: 2 });
 						return;
 					}

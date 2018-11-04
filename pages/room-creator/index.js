@@ -133,12 +133,18 @@ Page({
 		});
 		wx.request({
 			method: 'POST',
-			url: ServerAPI + '/createroom',
+			url: ServerAPI + 'room',
 			data: { roles },
 			success: function (res) {
 				wx.hideLoading();
-				if (res.statusCode !== 200) {
-					wx.showToast({
+
+				if (res.statusCode === 500) {
+					return wx.showToast({
+						title: '服务器房间数已满，请稍后重试。',
+						icon: 'none',
+					});
+				} else if (res.statusCode !== 200) {
+					return wx.showToast({
 						title: '非常抱歉，服务器临时故障。',
 						icon: 'fail',
 					});
