@@ -1,8 +1,8 @@
 //app.js
 App({
-  onLaunch: function () {
-  },
-  globalData: {
-    ServerUrl: 'https://werewolf.takashiro.cn/api',
-  }
+	onLaunch: function () {
+	},
+	globalData: {
+		ServerUrl: 'https://werewolf.takashiro.cn/api',
+	}
 });
