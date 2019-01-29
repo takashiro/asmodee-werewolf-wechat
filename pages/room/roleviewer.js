@@ -134,7 +134,7 @@ Component({
 						title: '本地网络故障，查看身份失败。',
 						icon: 'none'
 					});
-					this.setState({ state: 'init' });
+					this.setData({ state: 'init' });
 				}
 			});
 		},
