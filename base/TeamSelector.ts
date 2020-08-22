@@ -3,7 +3,6 @@ import {
 	Team,
 	Teamship,
 } from '@asmodee/werewolf-core';
-import RoleConfig from './RoleConfig';
 
 const roleList = Object.values(Role).filter((role) => !Number.isNaN(role)).map((role) => Number(role));
 
@@ -26,12 +25,12 @@ export default class TeamSelector {
 				role: basic,
 				num: 0,
 			};
-		};
+		}
 
 		this.others = roleList.filter(
-			role => Teamship.get(role) === this.team && (!this.basic || role !== basic)
+			(role) => Teamship.get(role) === this.team && (!this.basic || role !== basic),
 		).map(
-			role => ({ role: role, num: 0 })
+			(role) => ({ role, num: 0 }),
 		);
 	}
 

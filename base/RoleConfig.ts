@@ -56,8 +56,8 @@ export default class RoleConfig {
 				continue;
 			}
 			config.push({
-				role: role,
-				num: num,
+				role,
+				num,
 			});
 		}
 		wx.setStorage({

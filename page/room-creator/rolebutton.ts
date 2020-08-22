@@ -18,7 +18,7 @@ Component({
 		selected: {
 			type: Boolean,
 			value: false,
-		}
+		},
 	},
 
 	/**
@@ -33,7 +33,7 @@ Component({
 	methods: {
 		handleTap() {
 			const selected = !this.data.selected;
-			this.setData({ selected: selected });
+			this.setData({ selected });
 			this.triggerEvent('numberchange', {
 				role: this.data.role,
 				value: selected ? 1 : 0,

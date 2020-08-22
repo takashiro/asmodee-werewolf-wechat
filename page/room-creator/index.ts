@@ -53,7 +53,9 @@ Page({
 				icon: 'none',
 			});
 			return;
-		} else if (roles.length <= 0) {
+		}
+
+		if (roles.length <= 0) {
 			wx.showToast({
 				title: '请选择角色。',
 			});
@@ -66,7 +68,7 @@ Page({
 		client.post({
 			url: 'room',
 			data: { roles },
-			success: function (res) {
+			success(res) {
 				wx.hideLoading();
 
 				if (res.statusCode === 500) {
@@ -74,7 +76,9 @@ Page({
 						title: '服务器房间数已满，请稍后重试。',
 						icon: 'none',
 					});
-				} else if (res.statusCode !== 200) {
+				}
+
+				if (res.statusCode !== 200) {
 					return wx.showToast({
 						title: '非常抱歉，服务器临时故障。',
 					});
@@ -102,7 +106,7 @@ Page({
 					title: '网络状况不佳，请重试。',
 					icon: 'none',
 				});
-			}
+			},
 		});
 	},
 });

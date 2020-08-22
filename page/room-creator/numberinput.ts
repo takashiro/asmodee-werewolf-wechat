@@ -29,13 +29,13 @@ Component({
 			this.setData({ value: newVal });
 			this.triggerEvent('numberchange', {
 				role: this.data.role,
-				value: newVal
+				value: newVal,
 			});
 		},
 
 		handleInput(e) {
 			let num = parseInt(e.detail.value, 10);
-			if (isNaN(num)) {
+			if (Number.isNaN(num)) {
 				return;
 			}
 
@@ -47,15 +47,15 @@ Component({
 		},
 
 		handleDecrease() {
-			let newVal = this.data.value - 1;
+			const newVal = this.data.value - 1;
 			if (newVal >= 0) {
 				this.setValue(newVal);
 			}
 		},
 
 		handleIncrease() {
-			let newVal = this.data.value + 1;
+			const newVal = this.data.value + 1;
 			this.setValue(newVal);
 		},
-	}
-})
+	},
+});

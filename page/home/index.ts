@@ -16,7 +16,7 @@ Page({
 		}
 	},
 
-	//事件处理函数
+	// 事件处理函数
 	inputRoomNumber(e: WechatMiniprogram.InputEvent): void {
 		this.roomId = parseInt(e.detail.value, 10);
 	},
@@ -27,7 +27,7 @@ Page({
 		});
 		wx.navigateTo({
 			url: '../room-creator/index',
-			complete: function () {
+			complete() {
 				wx.hideLoading();
 			},
 		});
@@ -61,7 +61,7 @@ Page({
 					});
 				} else {
 					wx.showLoading({
-						'title': '加载房间信息……',
+						title: '加载房间信息……',
 					});
 					wx.setStorage({
 						key: 'room',
@@ -70,7 +70,7 @@ Page({
 							const room = res.data as RoomConfig;
 							wx.hideLoading();
 							wx.navigateTo({
-								url: '../room/index?salt=' + room.salt,
+								url: `../room/index?salt=${room.salt}`,
 							});
 						},
 						fail() {
@@ -87,7 +87,7 @@ Page({
 				wx.hideLoading();
 				wx.showToast({
 					title: '网络故障，请重试。',
-					icon: 'none'
+					icon: 'none',
 				});
 			},
 		});
