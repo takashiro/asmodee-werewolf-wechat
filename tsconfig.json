@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "module": "CommonJS",
+    "target": "ES5",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": true,
+    "lib": ["es5"],
+    "typeRoots": [
+      "./typings"
+    ]
+  },
+  "include": [
+    "./src/**/*.ts"
+  ]
+}

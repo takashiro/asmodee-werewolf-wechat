@@ -1,0 +1,34 @@
+{
+  "name": "@asmodee/werewolf-wechat",
+  "version": "0.2.0",
+  "description": "Game Assistant for Werewolves of Miller's Hollow",
+  "main": "src/app.ts",
+  "dependencies": {
+    "@asmodee/werewolf-core": "^0.1.3"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.54",
+    "miniprogram-api-typings": "^3.0.2",
+    "typescript": "^3.9.7"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takashiro/asmodee-werewolf-wechat.git"
+  },
+  "keywords": [
+    "werewolf",
+    "wechat",
+    "miniprogram",
+    "assistant"
+  ],
+  "author": "Kazuichi Takashiro",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/takashiro/asmodee-werewolf-wechat/issues"
+  },
+  "homepage": "https://github.com/takashiro/asmodee-werewolf-wechat#readme"
+}
