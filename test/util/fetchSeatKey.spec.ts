@@ -1,4 +1,4 @@
-import fetchSeatKey from '../../src/util/fetchSeatKey';
+import fetchSeatKey from '../../util/fetchSeatKey';
 
 const getStorage = jest.fn();
 const setStorage = jest.fn();

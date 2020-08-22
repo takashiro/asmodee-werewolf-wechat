@@ -1,4 +1,4 @@
-import { client } from '../../src/base/Client';
+import { client } from '../../base/Client';
 
 const rootUrl = 'https://werewolf.takashiro.cn/api';
 const request = jest.fn();
