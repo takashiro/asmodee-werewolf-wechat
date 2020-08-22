@@ -4,14 +4,19 @@
     "module": "CommonJS",
     "target": "ES5",
     "removeComments": true,
+    "downlevelIteration": true,
     "lib": [
       "ES2019"
+    ],
+    "types": [
+      "@types/wechat-miniprogram"
     ]
   },
   "include": [
-    "src/**/*.ts"
+    "./**/*.ts"
   ],
   "exclude": [
-    "./node_modules/**/*.ts"
+    "node_modules",
+    "test"
   ]
 }

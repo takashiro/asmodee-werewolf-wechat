@@ -3,7 +3,6 @@
 	"packOptions": {
 		"ignore": []
 	},
-	"miniprogramRoot": "src/",
 	"compileType": "miniprogram",
 	"libVersion": "2.8.2",
 	"projectname": "asdmodee-werewolf-wechat",
@@ -14,14 +13,14 @@
 	},
 	"setting": {
 		"urlCheck": true,
-		"es6": true,
+		"es6": false,
 		"enhance": false,
 		"postcss": true,
 		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": false,
 		"coverView": true,
-		"nodeModules": false,
+		"nodeModules": true,
 		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
@@ -36,8 +35,8 @@
 			"outputPath": ""
 		},
 		"useIsolateContext": true,
-		"useCompilerModule": true,
-		"userConfirmedUseCompilerModuleSwitch": false
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": true
 	},
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},

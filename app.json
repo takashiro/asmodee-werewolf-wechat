@@ -1,6 +1,7 @@
 {
   "pages": [
-    "page/home/index"
+    "page/home/index",
+    "page/room-creator/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
