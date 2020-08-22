@@ -1,121 +1,52 @@
-import {
-	Role,
-	Team,
-	Teamship,
-	RoomConfig,
-} from '@asmodee/werewolf-core';
+import { Role } from '@asmodee/werewolf-core';
 
-import Room from '../../base/Room';
+import RoleConfig from '../../base/RoleConfig';
 import { client } from '../../base/Client';
+import { selectors } from '../../base/TeamSelector';
 
-const selectors = [
-	{ team: Team.Werewolf, basic: { role: Role.Werewolf, num: 0 }, roles: null },
-	{ team: Team.Villager, basic: { role: Role.Villager, num: 0 }, roles: null },
-	{ team: Team.Other, basic: null, roles: null },
-];
-const roleList = Object.values(Role).filter((role) => !Number.isNaN(role)).map((role) => Number(role));
-for (const selector of selectors) {
-	selector.roles = roleList.filter(
-		role => Teamship.get(role) === selector.team && (!selector.basic || role !== selector.basic.role)
-	).map(
-		role => ({ role: role, num: 0 })
-	);
+interface RoleChangeEvent extends WechatMiniprogram.Event {
+	detail: {
+		role: Role;
+		value: number;
+	};
 }
 
-let roleConfig = new Map;
-
-function resetRoleConfig() {
-	roleConfig.clear();
-	roleConfig.set(Role.Werewolf, 4);
-	roleConfig.set(Role.Villager, 4);
-	roleConfig.set(Role.Seer, 1);
-	roleConfig.set(Role.Witch, 1);
-	roleConfig.set(Role.Hunter, 1);
-	roleConfig.set(Role.Guard, 1);
-}
-
-function restoreRoleConfig() {
-	let configs = wx.getStorageSync('roleConfig');
-	if (!configs || !(configs instanceof Array)) {
-		resetRoleConfig();
-	} else {
-		for (let config of configs) {
-			roleConfig.set(config.role, config.num);
-		}
-	}
-}
-
-function saveRoleConfig() {
-	let config = [];
-	for (let [role, num] of roleConfig) {
-		if (num <= 0) {
-			continue;
-		}
-		config.push({
-			role: role,
-			num: num,
-		});
-	}
-	wx.setStorage({
-		key: 'roleConfig',
-		data: config,
-	});
-}
+const roleConfig = new RoleConfig();
 
 Page({
 	data: {
-		selectors
+		selectors,
 	},
 
-	onLoad: function (options) {
-		restoreRoleConfig();
+	async onLoad(): Promise<void> {
+		await roleConfig.read();
 		this.refreshSettings();
 	},
 
-	refreshSettings: function () {
-		let selectors = [];
-		for (let selector of this.data.selectors) {
-			if (selector.basic) {
-				let num = roleConfig.get(selector.basic.role.value);
-				selector.basic.num = num;
-			}
-
-			if (selector.roles) {
-				for (let role of selector.roles) {
-					let num = roleConfig.get(role.role.value);
-					role.num = isNaN(num) ? 0 : num;
-				}
-			}
-
-			selectors.push(selector);
+	refreshSettings(): void {
+		const items = roleConfig.getItems();
+		for (const selector of selectors) {
+			selector.update(items);
 		}
-		this.setData({ selectors: selectors });
+		this.setData({ selectors });
 	},
 
-	handleRoleChange: function (e) {
+	handleRoleChange(e: RoleChangeEvent): void {
 		roleConfig.set(e.detail.role, e.detail.value);
 	},
 
-	handleReturn: function () {
+	handleReturn(): void {
 		wx.navigateBack();
 	},
 
-	createRoom: function () {
-		saveRoleConfig();
+	async createRoom(): Promise<void> {
+		await roleConfig.save();
 
-		let roles = [];
-		for (let [role, num] of roleConfig) {
-			if (role === Role.Unknown) {
-				continue;
-			}
-			for (let i = 0; i < num; i++) {
-				roles.push(role);
-			}
-		}
+		const roles = roleConfig.getRoles();
 
 		if (roles.length > 50) {
-			resetRoleConfig();
-			saveRoleConfig();
+			roleConfig.reset();
+			await roleConfig.save();
 			this.refreshSettings();
 			wx.showToast({
 				title: '最多仅能支持50人局，请重新选择。',
