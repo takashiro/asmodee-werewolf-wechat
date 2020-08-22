@@ -6,9 +6,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": true,
-    "lib": ["es5"],
-    "typeRoots": [
-      "./typings"
+    "lib": [
+      "ES2019"
     ]
   },
   "include": [
