@@ -1,13 +1,12 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/room/index",
-    "pages/room-creator/index"
+    "page/home/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "狼人杀上帝助手",
     "navigationBarTextStyle": "black"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

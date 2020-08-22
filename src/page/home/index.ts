@@ -1,28 +1,27 @@
-//获取应用实例
-const app = getApp();
-const ServerAPI = app.globalData.ServerAPI;
-
-let roomId = 0;
+import { RoomConfig } from '@asmodee/werewolf-core';
+import { client } from '../../base/Client';
 
 Page({
+	roomId: 0,
+
 	data: {
 	},
 
-	onLoad: function (options) {
-		if (options.room_id) {
-			roomId = parseInt(options.room_id, 10) || 0;
-			if (roomId) {
+	onLoad(options): void {
+		if (options.roomId) {
+			this.roomId = parseInt(options.roomId, 10) || 0;
+			if (this.roomId) {
 				this.enterRoom();
 			}
 		}
 	},
 
 	//事件处理函数
-	inputRoomNumber: function (e) {
-		roomId = parseInt(e.detail.value, 10);
+	inputRoomNumber(e: WechatMiniprogram.InputEvent): void {
+		this.roomId = parseInt(e.detail.value, 10);
 	},
 
-	createRoom: function () {
+	createRoom(): void {
 		wx.showLoading({
 			title: '加载中……',
 		});
@@ -34,8 +33,8 @@ Page({
 		});
 	},
 
-	enterRoom: function () {
-		if (!roomId) {
+	enterRoom() {
+		if (!this.roomId) {
 			wx.showToast({
 				title: '请输入房间号。',
 				icon: 'none',
@@ -46,14 +45,11 @@ Page({
 		wx.showLoading({
 			title: '加载中……',
 		});
-		wx.request({
-			method: 'GET',
-			url: ServerAPI + 'room',
-			data: { id: roomId },
-			success: function (res) {
+		client.get({
+			url: `room/${this.roomId}`,
+			success(res) {
 				wx.hideLoading();
-				let room = res.data;
-				if (res.statusCode === 404 || !room.id || room.id <= 0) {
+				if (res.statusCode === 404) {
 					wx.showToast({
 						title: '房间不存在。',
 						icon: 'none',
@@ -69,14 +65,15 @@ Page({
 					});
 					wx.setStorage({
 						key: 'room',
-						data: room,
-						success: function () {
+						data: res.data,
+						success() {
+							const room = res.data as RoomConfig;
 							wx.hideLoading();
 							wx.navigateTo({
 								url: '../room/index?salt=' + room.salt,
 							});
 						},
-						fail: function () {
+						fail() {
 							wx.hideLoading();
 							wx.showToast({
 								title: '存储房间信息失败。',
@@ -86,7 +83,7 @@ Page({
 					});
 				}
 			},
-			fail: function () {
+			fail() {
 				wx.hideLoading();
 				wx.showToast({
 					title: '网络故障，请重试。',
@@ -96,12 +93,11 @@ Page({
 		});
 	},
 
-	onShareAppMessage: function () {
-		let room = this.data.room;
+	onShareAppMessage() {
 		return {
 			title: '狼人杀上帝助手',
 			desc: '支持包含盗贼在内的23种特殊角色，邀请好友线下面杀吧！',
-			path: '/pages/index/index',
+			path: '/page/home',
 		};
 	},
 });
