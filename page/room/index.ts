@@ -1,12 +1,11 @@
-
-import Role from '../../game/Role';
-import Team from '../../game/Team';
-import Session from '../../util/Session';
-
-const app = getApp();
-const ServerAPI = app.globalData.ServerAPI;
+import {
+	Role,
+	Team,
+} from '@asmodee/werewolf-core';
+import { client } from '../../base/Client';
 
 function parseStorageData(data) {
+	/*
 	const room = data;
 	const roles = room.roles.map(id => Role.fromNum(id));
 	const teams = [];
@@ -30,7 +29,7 @@ function parseStorageData(data) {
 		room,
 		teams,
 		session,
-	};
+	};*/
 }
 
 Page({
@@ -50,16 +49,17 @@ Page({
 				return;
 			}
 
-			wx.request({
-				method: 'GET',
-				url: ServerAPI + 'room',
+			client.get({
+				url: `room/${room_id}`,
 				data: { id: room_id },
 				success: res => {
 					let room = res.data;
+					/*
 					if (res.statusCode === 404 || !room.id || room.id <= 0) {
 						this.setData({ status: 2 });
 						return;
 					}
+					*/
 
 					this.setData(parseStorageData(room));
 				}

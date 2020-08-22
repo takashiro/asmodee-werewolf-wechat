@@ -1,9 +1,11 @@
+import { Role } from '@asmodee/werewolf-core';
 
-import Role from '../../game/Role';
-import Session from '../../util/Session';
-
-const App = getApp();
-const ServerAPI = App.globalData.ServerAPI;
+const enum PageState {
+	Prepare = 'prepare',
+	Init = 'init',
+	Loading = 'loading',
+	Loaded = 'loaded',
+}
 
 const input = {
 	seat: 0,
@@ -28,7 +30,7 @@ Component({
 	 * 组件的初始数据
 	 */
 	data: {
-		state: 'prepare', // "prepare", "init", "loading", "loaded"
+		state: PageState.Prepare,
 		role: 0,
 		seat: 0,
 		cards: [],
