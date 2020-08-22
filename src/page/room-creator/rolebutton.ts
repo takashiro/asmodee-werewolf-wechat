@@ -32,13 +32,13 @@ Component({
 	 * 组件的方法列表
 	 */
 	methods: {
-		handleTap: function () {
-			let selected = !this.data.selected;
+		handleTap() {
+			const selected = !this.data.selected;
 			this.setData({ selected: selected });
 			this.triggerEvent('numberchange', {
 				role: this.data.role,
 				value: selected ? 1 : 0,
 			});
 		},
-	}
-})
+	},
+});

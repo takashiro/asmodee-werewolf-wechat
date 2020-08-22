@@ -25,7 +25,7 @@ Component({
 	 * 组件的方法列表
 	 */
 	methods: {
-		setValue: function (newVal) {
+		setValue(newVal) {
 			this.setData({ value: newVal });
 			this.triggerEvent('numberchange', {
 				role: this.data.role,
@@ -33,7 +33,7 @@ Component({
 			});
 		},
 
-		handleInput: function (e) {
+		handleInput(e) {
 			let num = parseInt(e.detail.value, 10);
 			if (isNaN(num)) {
 				return;
@@ -46,14 +46,14 @@ Component({
 			this.setValue(num);
 		},
 
-		handleDecrease: function () {
+		handleDecrease() {
 			let newVal = this.data.value - 1;
 			if (newVal >= 0) {
 				this.setValue(newVal);
 			}
 		},
 
-		handleIncrease: function () {
+		handleIncrease() {
 			let newVal = this.data.value + 1;
 			this.setValue(newVal);
 		},

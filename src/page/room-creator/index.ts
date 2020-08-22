@@ -1,19 +1,22 @@
+import {
+	Role,
+	Team,
+	Teamship,
+	RoomConfig,
+} from '@asmodee/werewolf-core';
 
-import Role from '../../game/Role';
-import Team from '../../game/Team';
-import Session from '../../util/Session';
-
-const App = getApp();
-const ServerAPI = App.globalData.ServerAPI;
+import Room from '../../base/Room';
+import { client } from '../../base/Client';
 
 const selectors = [
 	{ team: Team.Werewolf, basic: { role: Role.Werewolf, num: 0 }, roles: null },
 	{ team: Team.Villager, basic: { role: Role.Villager, num: 0 }, roles: null },
 	{ team: Team.Other, basic: null, roles: null },
 ];
+const roleList = Object.values(Role).filter((role) => !Number.isNaN(role)).map((role) => Number(role));
 for (const selector of selectors) {
-	selector.roles = Role.List.filter(
-		role => role.team === selector.team && (!selector.basic || role !== selector.basic.role)
+	selector.roles = roleList.filter(
+		role => Teamship.get(role) === selector.team && (!selector.basic || role !== selector.basic.role)
 	).map(
 		role => ({ role: role, num: 0 })
 	);
@@ -23,12 +26,12 @@ let roleConfig = new Map;
 
 function resetRoleConfig() {
 	roleConfig.clear();
-	roleConfig.set(Role.Werewolf.value, 4);
-	roleConfig.set(Role.Villager.value, 4);
-	roleConfig.set(Role.Seer.value, 1);
-	roleConfig.set(Role.Witch.value, 1);
-	roleConfig.set(Role.Hunter.value, 1);
-	roleConfig.set(Role.Guard.value, 1);
+	roleConfig.set(Role.Werewolf, 4);
+	roleConfig.set(Role.Villager, 4);
+	roleConfig.set(Role.Seer, 1);
+	roleConfig.set(Role.Witch, 1);
+	roleConfig.set(Role.Hunter, 1);
+	roleConfig.set(Role.Guard, 1);
 }
 
 function restoreRoleConfig() {
@@ -101,13 +104,12 @@ Page({
 		saveRoleConfig();
 
 		let roles = [];
-		for (let [role_value, num] of roleConfig) {
-			let role = Role.fromNum(role_value);
+		for (let [role, num] of roleConfig) {
 			if (role === Role.Unknown) {
 				continue;
 			}
 			for (let i = 0; i < num; i++) {
-				roles.push(role_value);
+				roles.push(role);
 			}
 		}
 
@@ -123,7 +125,6 @@ Page({
 		} else if (roles.length <= 0) {
 			wx.showToast({
 				title: '请选择角色。',
-				icon: 'fail',
 			});
 			return;
 		}
@@ -131,9 +132,8 @@ Page({
 		wx.showLoading({
 			title: '创建房间……',
 		});
-		wx.request({
-			method: 'POST',
-			url: ServerAPI + 'room',
+		client.post({
+			url: 'room',
 			data: { roles },
 			success: function (res) {
 				wx.hideLoading();
@@ -146,28 +146,18 @@ Page({
 				} else if (res.statusCode !== 200) {
 					return wx.showToast({
 						title: '非常抱歉，服务器临时故障。',
-						icon: 'fail',
 					});
-				}
-
-				let room = res.data;
-
-				if (room.salt && room.ownerKey) {
-					let session = new Session(room.salt);
-					session.ownerKey = room.ownerKey;
-					delete room.ownerKey;
-					session.save();
 				}
 
 				wx.setStorage({
 					key: 'room',
-					data: room,
-					success: function () {
+					data: res.data,
+					success() {
 						wx.redirectTo({
 							url: '../room/index',
 						});
 					},
-					fail: function () {
+					fail() {
 						wx.showToast({
 							title: '空间不足，存储房间信息失败。',
 							icon: 'none',
@@ -175,7 +165,7 @@ Page({
 					},
 				});
 			},
-			fail: function () {
+			fail() {
 				wx.hideLoading();
 				wx.showToast({
 					title: '网络状况不佳，请重试。',
@@ -183,5 +173,5 @@ Page({
 				});
 			}
 		});
-	}
+	},
 });
