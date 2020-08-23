@@ -1,12 +1,13 @@
-Werewolves of Miller's Hollow
+Werewolves of Miller's Hollow ![Node.js CI](https://github.com/takashiro/asmodee-werewolf-wechat/workflows/Node.js%20CI/badge.svg)
 ==========
 
-| Example Page |    https://werewolf.takashiro.cn      |
+| Offical Page |    https://werewolf.takashiro.cn      |
 |--------------|---------------------------------------|
 | Author       |           Kazuichi Takashiro          |
 
+![Wechat Mini-Program](https://raw.githubusercontent.com/takashiro/asmodee-werewolf-wechat/dev/logo.jpg)
 
-Lisense
+License
 -------
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -30,7 +31,6 @@ Node.js Server: https://github.com/takashiro/asmodee-werewolf-server
 
 Web Client: https://github.com/takashiro/asmodee-werewolf-react
 
-Running Environment
+Debugging Environment
 -------------------
-1. Nginx
-2. Node v8 or later versions
+1. Node v12 or later versions
