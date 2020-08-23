@@ -1,10 +1,35 @@
 {
 	"description": "项目配置文件",
 	"packOptions": {
-		"ignore": []
+		"ignore": [
+			{
+				"type": "folder",
+				"value": ".vscode"
+			},
+			{
+				"type": "folder",
+				"value": "test"
+			},
+			{
+				"type": "file",
+				"value": "package.json"
+			},
+			{
+				"type": "file",
+				"value": "package-lock.json"
+			},
+			{
+				"type": "file",
+				"value": "jest.config.js"
+			},
+			{
+				"type": "file",
+				"value": "logo.jpg"
+			}
+		]
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.2",
+	"libVersion": "2.12.1",
 	"projectname": "asdmodee-werewolf-wechat",
 	"scripts": {
 		"beforeCompile": "npm run build",
@@ -27,7 +52,7 @@
 		"uglifyFileName": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
+		"uploadWithSourceMap": false,
 		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
