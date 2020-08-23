@@ -18,23 +18,33 @@ export default class Room {
 		return this.salt;
 	}
 
-	async readSession(): Promise<PlayerProfile | undefined> {
+	readSession(): Promise<PlayerProfile | undefined> {
 		if (this.profile) {
-			return this.profile;
+			return Promise.resolve(this.profile);
 		}
 
-		const res = await wx.getStorage({ key: `session-${this.salt}` });
-		this.profile = res.data;
-		return res.data;
+		return new Promise((resolve, reject) => {
+			wx.getStorage({
+				key: `session-${this.salt}`,
+				success: (res) => {
+					this.profile = res.data;
+					resolve(this.profile);
+				},
+				fail: reject,
+			});
+		});
 	}
 
-	async saveSession(profile: PlayerProfile): Promise<boolean> {
+	saveSession(profile: PlayerProfile): Promise<void> {
 		this.profile = profile;
-		const res = await wx.setStorage({
-			key: `session-${this.salt}`,
-			data: profile,
+		return new Promise((resolve, reject) => {
+			wx.setStorage({
+				key: `session-${this.salt}`,
+				data: profile,
+				success: () => resolve(),
+				fail: reject,
+			});
 		});
-		return !res.errMsg;
 	}
 
 	static setConfig(config: RoomConfig): void {

@@ -1,4 +1,12 @@
-import { Role } from '@asmodee/werewolf-core';
+import {
+	Role,
+	PlayerProfile,
+} from '@asmodee/werewolf-core';
+
+import Room from '../../base/Room';
+import { client } from '../../base/Client';
+import fetchSeatKey from '../../util/fetchSeatKey';
+import RoleItem from '../../base/RoleItem';
 
 const enum PageState {
 	Prepare = 'prepare',
@@ -31,55 +39,55 @@ Component({
 	 */
 	data: {
 		state: PageState.Prepare,
-		role: 0,
 		seat: 0,
-		cards: [],
+		role: new RoleItem(Role.Unknown),
+		cards: [] as RoleItem[],
 	},
 
-	ready: function () {
-		let session = new Session(this.data.roomKey);
-		if (session.role) {
-			this.showRole(session.seat, session.role, session.cards);
-		} else {
-			this.setData({ state: 'init' });
+	async ready() {
+		const room = new Room(this.data.roomKey);
+		try {
+			const profile = await room.readSession();
+			if (profile) {
+				this.showRole(profile.seat, profile.roles);
+			}
+			return;
+		} catch (error) {
+			// Ignore
 		}
+		this.setData({ state: PageState.Init });
 	},
 
 	/**
 	 * 组件的方法列表
 	 */
 	methods: {
-		updateSeat: function (e) {
+		updateSeat(e): void {
 			input.seat = parseInt(e.detail.value, 10);
 		},
 
-		showRole: function (seat, role, cards) {
-			role = Role.fromNum(role);
-
-			if (cards && cards instanceof Array) {
-				cards = cards.map(card => Role.fromNum(card));
-			} else {
-				cards = [];
-			}
+		showRole(seat: number, roles: Role[]): void {
+			const [role] = roles;
+			const cards = roles.slice(1);
 
 			this.setData({
-				state: 'loaded',
-				seat: seat,
-				role: role,
-				cards: cards
+				state: PageState.Loaded,
+				seat,
+				role: new RoleItem(role),
+				cards: cards.map((card) => new RoleItem(card)),
 			});
 		},
 
-		fetchRole: function () {
-			let roomId = this.data.roomId;
-			if (roomId <= 0 || isNaN(roomId)) {
+		async fetchRole() {
+			const { roomId } = this.data;
+			if (roomId <= 0 || Number.isNaN(roomId)) {
 				return wx.showToast({
 					title: '房间号错误。',
 					icon: 'none'
 				});
 			}
 
-			let seat = input.seat;
+			const { seat } = input;
 			if (seat <= 0 || isNaN(seat)) {
 				return wx.showToast({
 					title: '请输入座位号。',
@@ -87,56 +95,52 @@ Component({
 				});
 			}
 
-			this.setData({ state: 'loading' });
+			this.setData({ state: PageState.Loading });
 
-			let session = new Session(this.data.roomKey);
-			session.save();
-
-			wx.request({
-				method: 'GET',
-				url: ServerAPI + 'role',
+			const seatKey = await fetchSeatKey();
+			client.get({
+				url: `room/${roomId}/seat/${seat}`,
 				data: {
-					id: roomId,
-					seat: seat,
-					key: session.seatKey
+					key: seatKey
 				},
-				success: res => {
+				success: async res => {
 					if (res.statusCode === 404) {
+						this.setData({ state: PageState.Init });
 						return wx.showToast({
 							title: '房间已失效，请重新创建房间。',
 							icon: 'none',
 						});
 					} else if (res.statusCode === 409) {
+						this.setData({ state: PageState.Init });
 						return wx.showToast({
 							title: '座位已被占用，请使用其他座位。',
 							icon: 'none',
-							complete: () => this.setData({ state: 'init' })
 						});
 					} else if (res.statusCode === 403) {
+						this.setData({ state: PageState.Init });
 						return wx.showToast({
 							title: '请刷新网页缓存，然后重试。',
 							icon: 'none',
 						});
 					} else if (res.statusCode != 200) {
+						this.setData({ state: PageState.Init });
 						return wx.showToast({
 							title: '查看身份失败。',
 							icon: 'none',
 						});
 					}
 
-					session.seat = input.seat;
-					session.role = res.data.role;
-					session.cards = res.data.cards;
-					session.save();
-
-					this.showRole(session.seat, session.role, session.cards);
+					const profile = res.data as PlayerProfile;
+					const room = new Room(this.data.roomKey);
+					await room.saveSession(profile);
+					this.showRole(profile.seat, profile.roles);
 				},
 				fail: () => {
 					wx.showToast({
 						title: '本地网络故障，查看身份失败。',
 						icon: 'none'
 					});
-					this.setData({ state: 'init' });
+					this.setData({ state: PageState.Init });
 				}
 			});
 		},

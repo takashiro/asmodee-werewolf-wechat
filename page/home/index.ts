@@ -1,5 +1,6 @@
 import { RoomConfig } from '@asmodee/werewolf-core';
 import { client } from '../../base/Client';
+import Room from '../../base/Room';
 
 Page({
 	roomId: 0,
@@ -63,23 +64,11 @@ Page({
 					wx.showLoading({
 						title: '加载房间信息……',
 					});
-					wx.setStorage({
-						key: 'room',
-						data: res.data,
-						success() {
-							const room = res.data as RoomConfig;
-							wx.hideLoading();
-							wx.navigateTo({
-								url: `../room/index?salt=${room.salt}`,
-							});
-						},
-						fail() {
-							wx.hideLoading();
-							wx.showToast({
-								title: '存储房间信息失败。',
-								icon: 'none',
-							});
-						},
+
+					Room.setConfig(res.data as RoomConfig);
+					wx.hideLoading();
+					wx.navigateTo({
+						url: '../room/index',
 					});
 				}
 			},
