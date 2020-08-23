@@ -40,7 +40,7 @@ export default class RoleConfig {
 
 	async read(): Promise<void> {
 		const res = await wx.getStorage({ key: 'roleConfig' });
-		if (!res.data || !Array.isArray(res.data)) {
+		if (!res || !res.data || !Array.isArray(res.data)) {
 			this.reset();
 		} else {
 			for (const config of res.data) {

@@ -29,7 +29,7 @@ Component({
 			this.setData({ value: newVal });
 			this.triggerEvent('numberchange', {
 				role: this.data.role,
-				value: newVal,
+				num: newVal,
 			});
 		},
 

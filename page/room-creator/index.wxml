@@ -6,11 +6,11 @@
     <text class="header">{{team.name}}</text>
     <view class="role-number-selector" wx:if="{{basic}}">
       <template is="role-icon" data="{{key: basic.role.key, name: basic.role.name}}" />
-      <NumberInput role="{{basic.role.value}}" value="{{basic.num}}" bindnumberchange="handleRoleChange" />
+      <NumberInput role="{{basic.role.id}}" value="{{basic.num}}" bindnumberchange="handleRoleChange" />
     </view>
     <view class="role-list">
-      <block wx:for="{{roles}}" wx:key="role-{{item.role.id}}">
-        <RoleButton role="{{item.role.value}}" icon="{{item.role.key}}" name="{{item.role.name}}" selected="{{item.num}}" bindnumberchange="handleRoleChange" />
+      <block wx:for="{{others}}" wx:key="id">
+        <RoleButton role="{{item.role.id}}" icon="{{item.role.key}}" name="{{item.role.name}}" selected="{{item.num}}" bindnumberchange="handleRoleChange" />
       </block>
     </view>
   </view>
@@ -18,7 +18,7 @@
 
 <view class="container">
   <template is="header" />
-  <block wx:for="{{selectors}}" wx:key="team-selector-{{item.team}}">
+  <block wx:for="{{selectors}}" wx:key="id">
     <template is="team-selector" data="{{...item}}" />
   </block>
 

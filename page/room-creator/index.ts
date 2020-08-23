@@ -7,7 +7,7 @@ import { selectors } from '../../base/TeamSelector';
 interface RoleChangeEvent extends WechatMiniprogram.Event {
 	detail: {
 		role: Role;
-		value: number;
+		num: number;
 	};
 }
 
@@ -24,15 +24,15 @@ Page({
 	},
 
 	refreshSettings(): void {
-		const items = roleConfig.getItems();
 		for (const selector of selectors) {
+			const items = roleConfig.getItems();
 			selector.update(items);
 		}
 		this.setData({ selectors });
 	},
 
 	handleRoleChange(e: RoleChangeEvent): void {
-		roleConfig.set(e.detail.role, e.detail.value);
+		roleConfig.set(e.detail.role, e.detail.num);
 	},
 
 	handleReturn(): void {
