@@ -83,15 +83,15 @@ Component({
 			if (roomId <= 0 || Number.isNaN(roomId)) {
 				return wx.showToast({
 					title: '房间号错误。',
-					icon: 'none'
+					icon: 'none',
 				});
 			}
 
 			const { seat } = input;
-			if (seat <= 0 || isNaN(seat)) {
+			if (seat <= 0 || Number.isNaN(seat)) {
 				return wx.showToast({
 					title: '请输入座位号。',
-					icon: 'none'
+					icon: 'none',
 				});
 			}
 
@@ -101,28 +101,28 @@ Component({
 			client.get({
 				url: `room/${roomId}/seat/${seat}`,
 				data: {
-					key: seatKey
+					key: seatKey,
 				},
-				success: async res => {
+				success: async (res) => {
 					if (res.statusCode === 404) {
 						this.setData({ state: PageState.Init });
 						return wx.showToast({
 							title: '房间已失效，请重新创建房间。',
 							icon: 'none',
 						});
-					} else if (res.statusCode === 409) {
+					} if (res.statusCode === 409) {
 						this.setData({ state: PageState.Init });
 						return wx.showToast({
 							title: '座位已被占用，请使用其他座位。',
 							icon: 'none',
 						});
-					} else if (res.statusCode === 403) {
+					} if (res.statusCode === 403) {
 						this.setData({ state: PageState.Init });
 						return wx.showToast({
 							title: '请刷新网页缓存，然后重试。',
 							icon: 'none',
 						});
-					} else if (res.statusCode != 200) {
+					} if (res.statusCode !== 200) {
 						this.setData({ state: PageState.Init });
 						return wx.showToast({
 							title: '查看身份失败。',
@@ -138,11 +138,11 @@ Component({
 				fail: () => {
 					wx.showToast({
 						title: '本地网络故障，查看身份失败。',
-						icon: 'none'
+						icon: 'none',
 					});
 					this.setData({ state: PageState.Init });
-				}
+				},
 			});
 		},
-	}
-})
+	},
+});

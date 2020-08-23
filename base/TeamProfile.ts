@@ -9,6 +9,7 @@ import RoleItem from './RoleItem';
 
 export default class TeamProfile {
 	readonly team: TeamItem;
+
 	readonly roles: RoleItem[];
 
 	constructor(team: Team, roles: Role[]) {
@@ -33,8 +34,8 @@ export default class TeamProfile {
 		}
 
 		const profiles: TeamProfile[] = [];
-		for (const [team, roles] of teams) {
-			profiles.push(new TeamProfile(team, roles));
+		for (const [team, members] of teams) {
+			profiles.push(new TeamProfile(team, members));
 		}
 		return profiles;
 	}
