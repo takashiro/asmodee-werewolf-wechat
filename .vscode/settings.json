@@ -6,9 +6,9 @@
 	"files.insertFinalNewline": true,
 	"files.exclude": {
 		"**/*.js.map": true,
+		"app.js": true,
 		"base/**/*.js": true,
 		"page/**/*.js": true,
-		"util/**/*.js": true,
-		"*.js": true
+		"util/**/*.js": true
 	}
 }

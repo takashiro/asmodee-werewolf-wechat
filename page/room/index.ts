@@ -1,8 +1,4 @@
-import {
-	Role,
-	Team,
-	RoomConfig,
-} from '@asmodee/werewolf-core';
+import { RoomConfig } from '@asmodee/werewolf-core';
 
 import { client } from '../../base/Client';
 import Room from '../../base/Room';
@@ -41,7 +37,6 @@ Page({
 						return;
 					}
 
-					const id = room.id;
 					this.setData({
 						id: room.id,
 						salt: room.salt,
