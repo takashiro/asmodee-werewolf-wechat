@@ -3,5 +3,12 @@
 	"editor.insertSpaces": false,
 	"files.trimFinalNewlines": true,
 	"files.trimTrailingWhitespace": true,
-	"files.insertFinalNewline": true
+	"files.insertFinalNewline": true,
+	"files.exclude": {
+		"**/*.js.map": true,
+		"base/**/*.js": true,
+		"page/**/*.js": true,
+		"util/**/*.js": true,
+		"*.js": true
+	}
 }
