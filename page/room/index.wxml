@@ -9,12 +9,12 @@
       <text class="message">加载中...</text>
     </block>
     <block wx:elif="{{status === 1}}">
-      <text class="info">房间号 {{room.id}}</text>
-      <view class="team" wx:for="{{teams}}" wx:key="team-{item.team.id}">
+      <text class="info">房间号 {{id}}</text>
+      <view class="team" wx:for="{{teams}}" wx:key="id">
         <text class="header">{{item.team.name}}</text>
         <template is="role-list" data="{{roles: item.roles}}" />
       </view>
-      <RoleViewer room-id="{{room.id}}" room-key="{{room.salt}}" />
+      <RoleViewer room-id="{{id}}" room-key="{{salt}}" />
     </block>
     <block wx:else>
       <text class="message">房间已失效</text>

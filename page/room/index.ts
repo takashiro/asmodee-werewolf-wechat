@@ -1,87 +1,69 @@
 import {
 	Role,
 	Team,
+	RoomConfig,
 } from '@asmodee/werewolf-core';
+
 import { client } from '../../base/Client';
+import Room from '../../base/Room';
+import TeamProfile from '../../base/TeamProfile';
 
-function parseStorageData(data) {
-	/*
-	const room = data;
-	const roles = room.roles.map(id => Role.fromNum(id));
-	const teams = [];
-
-	for (const team of Team.List) {
-		let team_roles = roles.filter(role => role.team === team);
-		if (team_roles.length <= 0) {
-			continue;
-		}
-
-		teams.push({
-			team: team,
-			roles: team_roles,
-		});
-	}
-
-	let session = new Session(room.salt);
-
-	return {
-		status: 1,
-		room,
-		teams,
-		session,
-	};*/
+const enum PageStatus {
+	Loading,
+	Loaded,
+	Expired,
 }
 
 Page({
 	data: {
-		status: 0,
-		room: {},
+		status: PageStatus.Loading,
+		id: 0,
+		salt: '',
 		session: null,
-		teams: [],
+		teams: [] as TeamProfile[],
 		role: null,
 	},
 
-	onLoad: function (options) {
-		if (options.room_id) {
-			let room_id = parseInt(options.room_id, 10) || 0;
-			if (room_id <= 0) {
-				this.setData({ status: 2 });
+	onLoad(options) {
+		if (options.roomId) {
+			const roomId = parseInt(options.roomId, 10) || 0;
+			if (roomId <= 0) {
+				this.setData({ status: PageStatus.Expired });
 				return;
 			}
 
 			client.get({
-				url: `room/${room_id}`,
-				data: { id: room_id },
-				success: res => {
-					let room = res.data;
-					/*
-					if (res.statusCode === 404 || !room.id || room.id <= 0) {
-						this.setData({ status: 2 });
+				url: `room/${roomId}`,
+				success: (res) => {
+					const room = res.data as RoomConfig;
+					if (res.statusCode === 404 || !room) {
+						this.setData({ status: PageStatus.Expired });
 						return;
 					}
-					*/
 
-					this.setData(parseStorageData(room));
-				}
-			})
-		} else {
-			let room = wx.getStorage({
-				key: 'room',
-				success: res => {
-					this.setData(parseStorageData(res.data));
-				},
-				fail: () => {
-					wx.showToast({
-						title: '读取房间信息失败。',
-						icon: 'none',
+					const id = room.id;
+					this.setData({
+						id: room.id,
+						salt: room.salt,
 					});
 				},
-			})
+			});
+		} else {
+			const room = Room.getConfig();
+			if (room) {
+				const teams = TeamProfile.fromRoles(room.roles);
+				this.setData({
+					status: PageStatus.Loaded,
+					id: room.id,
+					salt: room.salt,
+					teams,
+				});
+			}
 		}
 	},
 
-	handleReturn: function () {
-		let pages = getCurrentPages();
+	handleReturn() {
+		const pages = getCurrentPages();
 		if (pages.length >= 2) {
 			wx.navigateBack();
 		} else {
@@ -91,12 +73,12 @@ Page({
 		}
 	},
 
-	onShareAppMessage: function () {
-		let room = this.data.room;
+	onShareAppMessage() {
+		const { id } = this.data;
 		return {
-			title: '狼人杀房间 ' + room.id + '号',
+			title: `狼人杀房间 ${id}号`,
 			desc: '查看身份牌，悍跳自爆撕警徽',
-			path: '/pages/room/index?room_id=' + room.id,
+			path: `/pages/room/index?roomId=${id}`,
 		};
 	},
 });

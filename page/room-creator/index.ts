@@ -1,14 +1,13 @@
-import { Role } from '@asmodee/werewolf-core';
+import { RoomConfig } from '@asmodee/werewolf-core';
 
 import RoleConfig from '../../base/RoleConfig';
+import RoleConfigItem from '../../base/RoleConfigItem';
 import { client } from '../../base/Client';
 import { selectors } from '../../base/TeamSelector';
+import Room from '../../base/Room';
 
 interface RoleChangeEvent extends WechatMiniprogram.Event {
-	detail: {
-		role: Role;
-		num: number;
-	};
+	detail: RoleConfigItem;
 }
 
 const roleConfig = new RoleConfig();
@@ -84,20 +83,9 @@ Page({
 					});
 				}
 
-				wx.setStorage({
-					key: 'room',
-					data: res.data,
-					success() {
-						wx.redirectTo({
-							url: '../room/index',
-						});
-					},
-					fail() {
-						wx.showToast({
-							title: '空间不足，存储房间信息失败。',
-							icon: 'none',
-						});
-					},
+				Room.setConfig(res.data as RoomConfig);
+				wx.redirectTo({
+					url: '../room/index',
 				});
 			},
 			fail() {

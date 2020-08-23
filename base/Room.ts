@@ -1,4 +1,9 @@
-import { PlayerProfile } from '@asmodee/werewolf-core';
+import {
+	PlayerProfile,
+	RoomConfig,
+} from '@asmodee/werewolf-core';
+
+let curConfig: RoomConfig;
 
 export default class Room {
 	protected salt: string;
@@ -30,5 +35,13 @@ export default class Room {
 			data: profile,
 		});
 		return !res.errMsg;
+	}
+
+	static setConfig(config: RoomConfig): void {
+		curConfig = config;
+	}
+
+	static getConfig(): RoomConfig | undefined {
+		return curConfig;
 	}
 }

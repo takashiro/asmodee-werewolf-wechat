@@ -1,4 +1,5 @@
 import { Role } from '@asmodee/werewolf-core';
+import RoleConfigItem from './RoleConfigItem';
 
 export default class RoleConfig {
 	protected readonly roles: Map<Role, number> = new Map();
@@ -39,18 +40,26 @@ export default class RoleConfig {
 	}
 
 	async read(): Promise<void> {
-		const res = await wx.getStorage({ key: 'roleConfig' });
-		if (!res || !res.data || !Array.isArray(res.data)) {
-			this.reset();
-		} else {
-			for (const config of res.data) {
-				this.roles.set(config.role, config.num);
-			}
-		}
+		return new Promise((resolve, reject) => {
+			wx.getStorage({
+				key: 'roleConfig',
+				success: (res) => {
+					if (!res || !res.data || !Array.isArray(res.data)) {
+						this.reset();
+					} else {
+						for (const config of res.data) {
+							this.roles.set(config.role, config.num);
+						}
+					}
+					resolve();
+				},
+				fail: reject,
+			});
+		});
 	}
 
 	async save(): Promise<void> {
-		const config = [];
+		const config: RoleConfigItem[] = [];
 		for (const [role, num] of this.roles) {
 			if (num <= 0) {
 				continue;
@@ -60,9 +69,14 @@ export default class RoleConfig {
 				num,
 			});
 		}
-		wx.setStorage({
-			key: 'roleConfig',
-			data: config,
+
+		return new Promise((resolve, reject) => {
+			wx.setStorage({
+				key: 'roleConfig',
+				data: config,
+				success: () => resolve(),
+				fail: reject,
+			});
 		});
 	}
 }
