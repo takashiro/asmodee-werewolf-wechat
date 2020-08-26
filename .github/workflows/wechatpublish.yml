@@ -8,19 +8,7 @@ on:
     types: [created]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - run: npm ci
-      - run: npm run build
-      - run: npm test
-
-  publish-npm:
-    needs: build
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -30,6 +18,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run build
-      - uses: takashiro/publish-wechat-miniprogram
-        with:
-          ssh-key: ${{secrets.WECHAT_UPLOAD_KEY}}
+      - run: npm test
+      - uses: takashiro/publish-wechat-miniprogram@canary
+        env:
+          WECHAT_UPLOAD_KEY: ${{secrets.WECHAT_UPLOAD_KEY}}
