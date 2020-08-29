@@ -56,7 +56,7 @@ Page({
 			wx.navigateBack();
 		} else {
 			wx.redirectTo({
-				url: '../index/index',
+				url: '../home/index',
 			});
 		}
 	},
