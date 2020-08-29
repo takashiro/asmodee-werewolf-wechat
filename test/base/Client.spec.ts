@@ -1,13 +1,8 @@
+import wx from '../wx';
 import { client } from '../../base/Client';
 
 const rootUrl = 'https://werewolf.takashiro.cn/api';
-const request = jest.fn();
-
-beforeAll(() => {
-	Reflect.set(global, 'wx', {
-		request,
-	});
-});
+const { request } = wx;
 
 afterEach(() => {
 	request.mockClear();

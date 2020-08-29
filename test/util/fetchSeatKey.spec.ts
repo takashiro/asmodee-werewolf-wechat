@@ -1,14 +1,10 @@
+import wx from '../wx';
 import fetchSeatKey from '../../util/fetchSeatKey';
 
-const getStorage = jest.fn();
-const setStorage = jest.fn();
-
-beforeAll(() => {
-	Reflect.set(global, 'wx', {
-		getStorage,
-		setStorage,
-	});
-});
+const {
+	getStorage,
+	setStorage,
+} = wx;
 
 afterEach(() => {
 	setStorage.mockClear();
