@@ -40,7 +40,7 @@ export default class RoleConfig {
 	}
 
 	async read(): Promise<void> {
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			wx.getStorage({
 				key: 'roleConfig',
 				success: (res) => {
@@ -53,7 +53,10 @@ export default class RoleConfig {
 					}
 					resolve();
 				},
-				fail: reject,
+				fail: () => {
+					this.reset();
+					resolve();
+				},
 			});
 		});
 	}
