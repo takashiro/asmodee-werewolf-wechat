@@ -34,7 +34,7 @@ Page({
 		});
 	},
 
-	enterRoom() {
+	enterRoom(): void {
 		if (!this.roomId) {
 			wx.showToast({
 				title: '请输入房间号。',
@@ -85,8 +85,8 @@ Page({
 	onShareAppMessage() {
 		return {
 			title: '狼人杀上帝助手',
-			desc: '支持包含盗贼在内的23种特殊角色，邀请好友线下面杀吧！',
-			path: '/page/home',
+			desc: '支持36种特殊角色，邀请好友线下面杀吧！',
+			path: '/page/home/index',
 		};
 	},
 });
