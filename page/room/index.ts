@@ -66,7 +66,7 @@ Page({
 		return {
 			title: `狼人杀房间 ${id}号`,
 			desc: '查看身份牌，悍跳自爆撕警徽',
-			path: `/pages/room/index?roomId=${id}`,
+			path: `/page/room/index?roomId=${id}`,
 		};
 	},
 });
