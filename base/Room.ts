@@ -3,19 +3,94 @@ import {
 	RoomConfig,
 } from '@asmodee/werewolf-core';
 
-let curConfig: RoomConfig;
+import { client } from './Client';
 
 export default class Room {
-	protected salt: string;
+	protected readonly id: number;
+
+	protected config?: RoomConfig;
 
 	protected profile?: PlayerProfile;
 
-	constructor(salt: string) {
-		this.salt = salt;
+	constructor(id: number) {
+		this.id = id;
 	}
 
-	getSalt(): string {
-		return this.salt;
+	getId(): number {
+		return this.id;
+	}
+
+	getSalt(): string | undefined {
+		return this.config?.salt;
+	}
+
+	getOwnerKey(): string | undefined {
+		return this.config?.ownerKey;
+	}
+
+	getConfig(): RoomConfig | undefined {
+		return this.config;
+	}
+
+	setConfig(config: RoomConfig): void {
+		this.config = config;
+	}
+
+	fetchConfig(): Promise<number> {
+		return new Promise((resolve, reject) => {
+			client.get({
+				url: `room/${this.id}`,
+				success: (res) => {
+					if (res.statusCode === 200) {
+						this.config = res.data as RoomConfig;
+					}
+					resolve(res.statusCode);
+				},
+				fail: reject,
+			});
+		});
+	}
+
+	readConfig(): Promise<RoomConfig> {
+		if (this.config) {
+			return Promise.resolve(this.config);
+		}
+
+		return new Promise((resolve, reject) => {
+			wx.getStorage({
+				key: `room-${this.id}`,
+				success: (res) => {
+					this.config = res.data;
+					resolve(res.data);
+				},
+				fail: reject,
+			});
+		});
+	}
+
+	saveConfig(): Promise<void> {
+		return new Promise((resolve, reject) => {
+			if (!this.config) {
+				reject(new Error('Configuration does not exist. Fetch it first.'));
+				return;
+			}
+			wx.setStorage({
+				key: `room-${this.id}`,
+				data: this.config,
+				success: () => resolve(),
+				fail: reject,
+			});
+		});
+	}
+
+	deleteConfig(): Promise<void> {
+		return new Promise((resolve, reject) => {
+			wx.removeStorage({
+				key: `room-${this.id}`,
+				success: () => resolve(),
+				fail: reject,
+			});
+		});
 	}
 
 	readSession(): Promise<PlayerProfile | undefined> {
@@ -25,7 +100,7 @@ export default class Room {
 
 		return new Promise((resolve, reject) => {
 			wx.getStorage({
-				key: `session-${this.salt}`,
+				key: `room-${this.id}-session`,
 				success: (res) => {
 					this.profile = res.data;
 					resolve(this.profile);
@@ -39,19 +114,11 @@ export default class Room {
 		this.profile = profile;
 		return new Promise((resolve, reject) => {
 			wx.setStorage({
-				key: `session-${this.salt}`,
+				key: `room-${this.id}-session`,
 				data: profile,
 				success: () => resolve(),
 				fail: reject,
 			});
 		});
-	}
-
-	static setConfig(config: RoomConfig): void {
-		curConfig = config;
-	}
-
-	static getConfig(): RoomConfig | undefined {
-		return curConfig;
 	}
 }

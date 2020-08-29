@@ -5,6 +5,7 @@
 			"@types/wechat-miniprogram",
 			"@types/node",
 			"@types/jest"
-    ]
+		],
+		"strict": false
   },
 }
