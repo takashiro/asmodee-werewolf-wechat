@@ -7,6 +7,7 @@ import Room from '../../base/Room';
 import { client } from '../../base/Client';
 import fetchSeatKey from '../../util/fetchSeatKey';
 import RoleItem from '../../base/RoleItem';
+import { lobby } from '../../base/Lobby';
 
 const enum PageState {
 	Prepare = 'prepare',
@@ -45,9 +46,9 @@ Component({
 	},
 
 	async ready() {
-		const room = new Room(this.data.roomKey);
+		const room = lobby.getCurrentRoom();
 		try {
-			const profile = await room.readSession();
+			const profile = await room?.readSession();
 			if (profile) {
 				this.showRole(profile.seat, profile.roles);
 			}
@@ -131,7 +132,7 @@ Component({
 					}
 
 					const profile = res.data as PlayerProfile;
-					const room = new Room(this.data.roomKey);
+					const room = new Room(this.data.roomId);
 					await room.saveSession(profile);
 					this.showRole(profile.seat, profile.roles);
 				},

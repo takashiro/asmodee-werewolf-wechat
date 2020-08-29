@@ -1,20 +1,9 @@
-import { RoomConfig } from '@asmodee/werewolf-core';
-import { client } from '../../base/Client';
-import Room from '../../base/Room';
+import { lobby } from '../../base/Lobby';
 
 Page({
 	roomId: 0,
 
 	data: {
-	},
-
-	onLoad(options): void {
-		if (options.roomId) {
-			this.roomId = parseInt(options.roomId, 10) || 0;
-			if (this.roomId) {
-				this.enterRoom();
-			}
-		}
 	},
 
 	// 事件处理函数
@@ -34,7 +23,7 @@ Page({
 		});
 	},
 
-	enterRoom(): void {
+	async enterRoom(): Promise<void> {
 		if (!this.roomId) {
 			wx.showToast({
 				title: '请输入房间号。',
@@ -46,40 +35,41 @@ Page({
 		wx.showLoading({
 			title: '加载中……',
 		});
-		client.get({
-			url: `room/${this.roomId}`,
-			success(res) {
-				wx.hideLoading();
-				if (res.statusCode === 404) {
-					wx.showToast({
-						title: '房间不存在。',
-						icon: 'none',
-					});
-				} else if (res.statusCode !== 200) {
-					wx.showToast({
-						title: '加载房间信息失败。',
-						icon: 'none',
-					});
-				} else {
-					wx.showLoading({
-						title: '加载房间信息……',
-					});
 
-					Room.setConfig(res.data as RoomConfig);
+		let status = 100;
+		try {
+			status = await lobby.enterRoom(this.roomId);
+		} catch (error) {
+			wx.hideLoading();
+			wx.showToast({
+				title: '网络故障，请重试。',
+				icon: 'none',
+			});
+		} finally {
+			wx.hideLoading();
+		}
+
+		if (status === 404) {
+			wx.showToast({
+				title: '房间不存在。',
+				icon: 'none',
+			});
+		} else if (status !== 200) {
+			wx.showToast({
+				title: '加载房间信息失败。',
+				icon: 'none',
+			});
+		} else {
+			wx.showLoading({
+				title: '加载房间信息……',
+			});
+			wx.navigateTo({
+				url: '../room/index',
+				complete: () => {
 					wx.hideLoading();
-					wx.navigateTo({
-						url: '../room/index',
-					});
-				}
-			},
-			fail() {
-				wx.hideLoading();
-				wx.showToast({
-					title: '网络故障，请重试。',
-					icon: 'none',
-				});
-			},
-		});
+				},
+			});
+		}
 	},
 
 	onShareAppMessage() {

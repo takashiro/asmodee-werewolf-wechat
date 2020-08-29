@@ -1,10 +1,7 @@
-import { RoomConfig } from '@asmodee/werewolf-core';
-
 import RoleConfig from '../../base/RoleConfig';
 import RoleConfigItem from '../../base/RoleConfigItem';
-import { client } from '../../base/Client';
 import { selectors } from '../../base/TeamSelector';
-import Room from '../../base/Room';
+import { lobby } from '../../base/Lobby';
 
 interface RoleChangeEvent extends WechatMiniprogram.Event {
 	detail: RoleConfigItem;
@@ -64,37 +61,37 @@ Page({
 		wx.showLoading({
 			title: '创建房间……',
 		});
-		client.post({
-			url: 'room',
-			data: { roles },
-			success(res) {
-				wx.hideLoading();
 
-				if (res.statusCode === 500) {
-					return wx.showToast({
-						title: '服务器房间数已满，请稍后重试。',
-						icon: 'none',
-					});
-				}
+		let status = 100;
+		try {
+			status = await lobby.createRoom({ roles });
+		} catch (error) {
+			wx.hideLoading();
+			wx.showToast({
+				title: '网络状况不佳，请重试。',
+				icon: 'none',
+			});
+			return;
+		}
+		wx.hideLoading();
 
-				if (res.statusCode !== 200) {
-					return wx.showToast({
-						title: '非常抱歉，服务器临时故障。',
-					});
-				}
+		if (status === 500) {
+			wx.showToast({
+				title: '服务器房间数已满，请稍后重试。',
+				icon: 'none',
+			});
+			return;
+		}
 
-				Room.setConfig(res.data as RoomConfig);
-				wx.redirectTo({
-					url: '../room/index',
-				});
-			},
-			fail() {
-				wx.hideLoading();
-				wx.showToast({
-					title: '网络状况不佳，请重试。',
-					icon: 'none',
-				});
-			},
+		if (status !== 200) {
+			wx.showToast({
+				title: '非常抱歉，服务器临时故障。',
+			});
+			return;
+		}
+
+		wx.redirectTo({
+			url: '../room/index',
 		});
 	},
 });

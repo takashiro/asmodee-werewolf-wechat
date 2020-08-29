@@ -1,8 +1,5 @@
-import { RoomConfig } from '@asmodee/werewolf-core';
-
-import { client } from '../../base/Client';
-import Room from '../../base/Room';
 import TeamProfile from '../../base/TeamProfile';
+import { lobby } from '../../base/Lobby';
 
 const enum PageStatus {
 	Loading,
@@ -20,7 +17,7 @@ Page({
 		role: null,
 	},
 
-	onLoad(options) {
+	async onLoad(options): Promise<void> {
 		if (options.roomId) {
 			const roomId = parseInt(options.roomId, 10) || 0;
 			if (roomId <= 0) {
@@ -28,32 +25,28 @@ Page({
 				return;
 			}
 
-			client.get({
-				url: `room/${roomId}`,
-				success: (res) => {
-					const room = res.data as RoomConfig;
-					if (res.statusCode === 404 || !room) {
-						this.setData({ status: PageStatus.Expired });
-						return;
-					}
-
-					this.setData({
-						id: room.id,
-						salt: room.salt,
-					});
-				},
-			});
-		} else {
-			const room = Room.getConfig();
-			if (room) {
-				const teams = TeamProfile.fromRoles(room.roles);
-				this.setData({
-					status: PageStatus.Loaded,
-					id: room.id,
-					salt: room.salt,
-					teams,
-				});
+			let status = 100;
+			try {
+				status = await lobby.enterRoom(roomId);
+			} catch (error) {
+				// Ignore
 			}
+
+			if (status !== 200) {
+				this.setData({ status: PageStatus.Expired });
+			}
+		}
+
+		const room = lobby.getCurrentRoom();
+		const config = room?.getConfig();
+		if (config) {
+			const teams = TeamProfile.fromRoles(config.roles);
+			this.setData({
+				status: PageStatus.Loaded,
+				id: config.id,
+				salt: config.salt,
+				teams,
+			});
 		}
 	},
 
