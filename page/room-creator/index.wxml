@@ -1,16 +1,12 @@
-<import src="../role-icon.wxml" />
-
 <template name="team-selector">
   <view class="team">
     <text class="header">{{team.name}}</text>
     <view class="role-number-selector" wx:if="{{basic}}">
-      <template is="role-icon" data="{{key: basic.role.key, name: basic.role.name}}" />
+      <RoleIcon role="{{basic.role.id}}" />
       <NumberInput role="{{basic.role.id}}" value="{{basic.num}}" bindnumberchange="handleRoleChange" />
     </view>
     <view class="role-list">
-      <block wx:for="{{others}}" wx:key="id">
-        <RoleButton role="{{item.role.id}}" icon="{{item.role.key}}" name="{{item.role.name}}" selected="{{item.num}}" bindnumberchange="handleRoleChange" />
-      </block>
+      <RoleIcon wx:for="{{others}}" wx:key="id" role="{{item.role.id}}" selectable="true" selected="{{item.num}}" bindnumberchange="handleRoleChange" />
     </view>
   </view>
 </template>

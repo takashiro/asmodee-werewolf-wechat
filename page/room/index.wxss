@@ -20,6 +20,5 @@ view.room text.message {
   font-size: 12pt;
 }
 
-@import "../team-selector.wxss";
-
-@import "../role-list.wxss";
+@import '../team-selector.wxss';
+@import '../role-list.wxss';

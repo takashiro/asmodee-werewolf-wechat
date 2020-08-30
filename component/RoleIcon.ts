@@ -1,37 +1,39 @@
+import RoleItem from '../base/RoleItem';
+
 Component({
-	/**
-	 * 组件的属性列表
-	 */
 	properties: {
 		role: {
 			type: Number,
 			value: 0,
 		},
-		icon: {
-			type: String,
-			value: 'werewolf',
-		},
-		name: {
-			type: String,
-			value: 'Takashiro',
+		selectable: {
+			type: Boolean,
+			value: false,
 		},
 		selected: {
 			type: Boolean,
 			value: false,
 		},
 	},
-
-	/**
-	 * 组件的初始数据
-	 */
 	data: {
+		key: '',
+		name: '',
 	},
-
-	/**
-	 * 组件的方法列表
-	 */
+	lifetimes: {
+		attached() {
+			const item = new RoleItem(this.properties.role);
+			this.setData({
+				key: item.key,
+				name: item.name,
+			});
+		},
+	},
 	methods: {
 		handleTap() {
+			if (!this.data.selectable) {
+				return;
+			}
+
 			const selected = !this.data.selected;
 			this.setData({ selected });
 			this.triggerEvent('numberchange', {

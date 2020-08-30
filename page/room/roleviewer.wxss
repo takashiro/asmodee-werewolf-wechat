@@ -39,8 +39,6 @@
   margin: 15px;
 }
 
-@import "../role-list.wxss";
-
 .role-viewer .role-list {
   position: absolute;
   top: 90px;
@@ -50,12 +48,12 @@
   box-sizing: border-box;
 }
 
-.role-viewer .role-list view.role:nth-child(2n+1) {
+.role-viewer .role-list > .card:nth-child(2n+1) {
  float: left;
  display: block;
 }
 
-.role-viewer .role-list view.role:nth-child(2n) {
+.role-viewer .role-list > .card:nth-child(2n) {
   float: right;
   display: block;
 }

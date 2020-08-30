@@ -1,18 +1,12 @@
 
-view.role {
+.role {
   width: 64px;
   height: 90px;
   font-size: 11pt;
-  margin: 0 7px;
+  text-align: center;
 }
 
-@media screen and (max-width: 375px) {
-  view.role {
-		margin: 0 3px;
-	}
-}
-
-view.role view.icon {
+.role .icon {
   width: 64px;
   height: 64px;
   overflow: hidden;
@@ -20,10 +14,14 @@ view.role view.icon {
   position: relative;
 }
 
-view.role view.icon image {
+.role .icon .image {
   width: 80px;
   height: 112px;
   position: absolute;
   top: -9px;
   left: -7px;
+}
+
+.selected .icon {
+  box-shadow: #fed840 0 0 4px 2px;
 }

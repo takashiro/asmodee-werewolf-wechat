@@ -1,0 +1,6 @@
+<view class="role {{selected ? 'selected' : ''}}" bindtap="handleTap">
+	<view class="icon" wx:if="{{key}}">
+		<image class="image" src="/style/role/{{key}}.jpg" />
+	</view>
+	<text>{{name}}</text>
+</view>

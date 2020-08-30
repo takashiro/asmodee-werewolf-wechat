@@ -1,5 +1,3 @@
-<import src="../role-list.wxml" />
-
 <view class="container">
   <include src="../header.wxml" />
 
@@ -11,7 +9,9 @@
       <text class="info">房间号 {{id}}</text>
       <view class="team" wx:for="{{teams}}" wx:key="id">
         <text class="header">{{item.team.name}}</text>
-        <template is="role-list" data="{{roles: item.roles}}" />
+        <view class="role-list">
+          <RoleIcon role="{{item.id}}" wx:for="{{item.roles}}" wx:key="id" />
+        </view>
       </view>
       <RoleViewer room-id="{{id}}" room-key="{{salt}}" />
     </block>

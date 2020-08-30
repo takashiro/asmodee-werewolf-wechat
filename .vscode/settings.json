@@ -8,6 +8,7 @@
 		"**/*.js.map": true,
 		"app.js": true,
 		"base/**/*.js": true,
+		"component/**/*.js": true,
 		"page/**/*.js": true,
 		"util/**/*.js": true
 	}

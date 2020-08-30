@@ -1,6 +1,6 @@
 
-@import "../team-selector.wxss";
-@import "../role-list.wxss";
+@import '../team-selector.wxss';
+@import '../role-list.wxss';
 
 .role-number-selector {
   height: 90px;
@@ -9,8 +9,8 @@
   font-size: 9pt;
 }
 
-.role-number-selector view.role {
+.role-number-selector roleicon {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 7px;
 }

@@ -1,13 +1,18 @@
 
-view.role-list {
-  display: block;
-  margin-bottom: 10px;
+.role-list {
   text-align: left;
 }
 
-view.role-list > view.role {
+.role-list roleicon {
   display: inline-block;
-  text-align: center;
+  margin: 0 7px;
 }
 
-@import "role-icon.wxss";
+@media screen and (max-width: 375px) {
+  .role-number-selector roleicon {
+    left: 3px;
+  }
+  .role-list roleicon {
+    margin: 0 3px;
+  }
+}

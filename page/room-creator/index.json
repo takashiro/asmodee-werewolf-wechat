@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "RoleButton": "./rolebutton",
+    "RoleIcon": "../../component/RoleIcon",
     "NumberInput": "./numberinput"
   }
 }
