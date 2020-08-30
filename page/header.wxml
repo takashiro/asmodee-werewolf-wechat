@@ -1,0 +1,3 @@
+<view class="header">
+	<image class="logo" src="/style/logo.png" />
+</view>

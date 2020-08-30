@@ -1,8 +1,7 @@
-<import src="../global.wxml" />
 <import src="../role-list.wxml" />
 
 <view class="container">
-  <template is="header" />
+  <include src="../header.wxml" />
 
   <view class="room">
     <block wx:if="{{status === 0}}">
@@ -26,5 +25,5 @@
     </view>
   </view>
 
-  <template is="footer" />
+  <include src="../footer.wxml" />
 </view>

@@ -1,4 +1,3 @@
-<import src="../global.wxml" />
 <import src="../role-icon.wxml" />
 
 <template name="team-selector">
@@ -17,7 +16,7 @@
 </template>
 
 <view class="container">
-  <template is="header" />
+  <include src="../header.wxml" />
   <block wx:for="{{selectors}}" wx:key="id">
     <template is="team-selector" data="{{...item}}" />
   </block>
@@ -27,5 +26,5 @@
     <button bindtap="createRoom">创建房间</button>
   </view>
 
-  <template is="footer" />
+  <include src="../footer.wxml" />
 </view>
