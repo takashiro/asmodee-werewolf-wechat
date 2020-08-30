@@ -5,16 +5,15 @@ import {
 } from '@asmodee/werewolf-core';
 
 import TeamItem from './TeamItem';
-import RoleItem from './RoleItem';
 
 export default class TeamProfile {
 	readonly team: TeamItem;
 
-	readonly roles: RoleItem[];
+	readonly roles: Role[];
 
 	constructor(team: Team, roles: Role[]) {
 		this.team = new TeamItem(team);
-		this.roles = roles.map((role) => new RoleItem(role));
+		this.roles = roles;
 	}
 
 	static fromRoles(roles: Role[]): TeamProfile[] {

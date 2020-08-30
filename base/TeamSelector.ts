@@ -4,14 +4,12 @@ import {
 	Teamship,
 } from '@asmodee/werewolf-core';
 
-import RoleItem from './RoleItem';
 import TeamItem from './TeamItem';
 
 const roleList = Object.values(Role).filter((role) => !Number.isNaN(role)).map((role) => Number(role));
 
 interface RoleSelection {
-	id: number;
-	role: RoleItem;
+	role: Role;
 	num: number;
 }
 
@@ -29,8 +27,7 @@ export default class TeamSelector {
 		this.team = new TeamItem(team);
 		if (basic) {
 			this.basic = {
-				id: basic,
-				role: new RoleItem(basic),
+				role: basic,
 				num: 0,
 			};
 		}
@@ -39,8 +36,7 @@ export default class TeamSelector {
 			(role) => Teamship.get(role) === this.team.id && (!this.basic || role !== basic),
 		).map(
 			(role) => ({
-				id: role,
-				role: new RoleItem(role),
+				role,
 				num: 0,
 			}),
 		);
@@ -53,13 +49,13 @@ export default class TeamSelector {
 	update(items: IterableIterator<[Role, number]>): void {
 		for (const [role, num] of items) {
 			if (this.basic) {
-				if (this.basic.role.id === role) {
+				if (this.basic.role === role) {
 					this.basic.num = num;
 					continue;
 				}
 			}
 			for (const other of this.others) {
-				if (other.role.id === role) {
+				if (other.role === role) {
 					other.num = num;
 					continue;
 				}

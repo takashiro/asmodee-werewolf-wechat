@@ -10,7 +10,7 @@
       <view class="team" wx:for="{{teams}}" wx:key="id">
         <text class="header">{{item.team.name}}</text>
         <view class="role-list">
-          <RoleIcon role="{{item.id}}" wx:for="{{item.roles}}" wx:key="id" />
+          <RoleIcon role="{{item}}" wx:for="{{item.roles}}" wx:key="*this" />
         </view>
       </view>
       <RoleViewer room-id="{{id}}" room-key="{{salt}}" />
