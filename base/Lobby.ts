@@ -54,7 +54,7 @@ export default class Lobby {
 		delete this.currentRoom;
 
 		const room = new Room(id);
-		if (this.hasRoom(room)) {
+		if (await this.hasRoom(room)) {
 			try {
 				await room.readConfig();
 				this.setCurrentRoom(room);
@@ -79,7 +79,7 @@ export default class Lobby {
 	}
 
 	async saveRoom(room: Room): Promise<void> {
-		this.expiryMap[room.getId()] = new Date().getUTCMilliseconds();
+		this.expiryMap[room.getId()] = new Date().getTime() + 3600 * 1000;
 		await room.saveConfig();
 		await this.saveExpiryMap();
 	}
@@ -87,22 +87,24 @@ export default class Lobby {
 	async filterExpiryMap(): Promise<ExpiryMap> {
 		await this.readExpiryMap();
 
-		const now = new Date().getUTCMilliseconds();
+		const now = new Date().getTime();
 		const roomIds = Object.keys(this.expiryMap);
 
 		let modified = false;
 		for (const roomId of roomIds) {
-			const expiry = this.expiryMap[roomId];
-			if (expiry <= now) {
-				modified = true;
-				delete this.expiryMap[roomId];
-				const id = Number.parseInt(roomId, 10);
-				if (Number.isNaN(id)) {
-					continue;
-				}
-				const room = new Room(id);
-				await room.deleteConfig();
+			if (this.expiryMap[roomId] > now) {
+				continue;
 			}
+
+			modified = true;
+			delete this.expiryMap[roomId];
+			const id = Number.parseInt(roomId, 10);
+			if (Number.isNaN(id)) {
+				continue;
+			}
+
+			const room = new Room(id);
+			room.delete();
 		}
 
 		if (modified) {

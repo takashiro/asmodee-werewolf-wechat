@@ -28,6 +28,13 @@ export default class Room {
 		return this.config?.ownerKey;
 	}
 
+	async delete(): Promise<void> {
+		await Promise.all([
+			this.deleteConfig(),
+			this.deleteSession(),
+		]);
+	}
+
 	getConfig(): RoomConfig | undefined {
 		return this.config;
 	}
@@ -117,6 +124,16 @@ export default class Room {
 				key: `room-${this.id}-session`,
 				data: profile,
 				success: () => resolve(),
+				fail: reject,
+			});
+		});
+	}
+
+	deleteSession(): Promise<void> {
+		return new Promise((resolve, reject) => {
+			wx.removeStorage({
+				key: `room-${this.id}-session`,
+				success: () => resolve,
 				fail: reject,
 			});
 		});
