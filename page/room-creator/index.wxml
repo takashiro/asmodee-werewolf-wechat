@@ -2,8 +2,8 @@
   <view class="team">
     <text class="header">{{team.name}}</text>
     <view class="role-number-selector" wx:if="{{basic}}">
-      <RoleIcon role="{{basic.role.id}}" />
-      <NumberInput role="{{basic.role.id}}" value="{{basic.num}}" bindnumberchange="handleRoleChange" />
+      <RoleIcon role="{{basic.role}}" />
+      <NumberInput role="{{basic.role}}" value="{{basic.num}}" bindnumberchange="handleRoleChange" />
     </view>
     <view class="role-list">
       <RoleIcon wx:for="{{others}}" wx:key="role" role="{{item.role}}" selectable="true" selected="{{item.num}}" bindnumberchange="handleRoleChange" />
