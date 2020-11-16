@@ -1,70 +1,75 @@
 {
-	"description": "项目配置文件",
-	"packOptions": {
-		"ignore": [
-			{
-				"type": "folder",
-				"value": ".vscode"
-			},
-			{
-				"type": "folder",
-				"value": "test"
-			},
-			{
-				"type": "file",
-				"value": "package.json"
-			},
-			{
-				"type": "file",
-				"value": "package-lock.json"
-			},
-			{
-				"type": "file",
-				"value": "jest.config.js"
-			},
-			{
-				"type": "file",
-				"value": "logo.jpg"
-			}
-		]
-	},
-	"compileType": "miniprogram",
-	"libVersion": "2.12.1",
-	"projectname": "asdmodee-werewolf-wechat",
-	"scripts": {
-		"beforeCompile": "npm run build",
-		"beforePreview": "npm run build",
-		"beforeUpload": "npm run build"
-	},
-	"setting": {
-		"urlCheck": true,
-		"es6": false,
-		"enhance": false,
-		"postcss": true,
-		"preloadBackgroundData": false,
-		"minified": true,
-		"newFeature": false,
-		"coverView": true,
-		"nodeModules": true,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"uglifyFileName": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": false,
-		"compileHotReLoad": false,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"useIsolateContext": true,
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": true
-	},
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"appid": "wxddc3614db48bac94",
-	"condition": {}
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "folder",
+        "value": ".vscode"
+      },
+      {
+        "type": "folder",
+        "value": "test"
+      },
+      {
+        "type": "file",
+        "value": "package.json"
+      },
+      {
+        "type": "file",
+        "value": "package-lock.json"
+      },
+      {
+        "type": "file",
+        "value": "jest.config.js"
+      },
+      {
+        "type": "file",
+        "value": "logo.jpg"
+      }
+    ]
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.12.1",
+  "projectname": "asdmodee-werewolf-wechat",
+  "scripts": {
+    "beforeCompile": "npm run build",
+    "beforePreview": "npm run build",
+    "beforeUpload": "npm run build"
+  },
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "enhance": false,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": false,
+    "coverView": true,
+    "nodeModules": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": false,
+    "compileHotReLoad": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useIsolateContext": true,
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModuleSwitch": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "useMultiFrameRuntime": false,
+    "useApiHook": true
+  },
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "appid": "wxddc3614db48bac94",
+  "condition": {}
 }
