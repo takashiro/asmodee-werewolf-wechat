@@ -7,7 +7,7 @@ Page({
 	},
 
 	// 事件处理函数
-	inputRoomNumber(e: WechatMiniprogram.InputEvent): void {
+	inputRoomNumber(e: WechatMiniprogram.Input): void {
 		this.roomId = parseInt(e.detail.value, 10);
 	},
 

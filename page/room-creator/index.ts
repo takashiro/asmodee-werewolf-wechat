@@ -3,7 +3,7 @@ import RoleConfigItem from '../../base/RoleConfigItem';
 import { selectors } from '../../base/TeamSelector';
 import { lobby } from '../../base/Lobby';
 
-interface RoleChangeEvent extends WechatMiniprogram.Event {
+interface RoleChangeEvent extends WechatMiniprogram.CustomEvent {
 	detail: RoleConfigItem;
 }
 

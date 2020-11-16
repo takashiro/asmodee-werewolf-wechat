@@ -37,6 +37,7 @@
 			"error",
 			"WithStatement"
 		],
+		"no-shadow": "off",
 		"no-tabs": "off"
 	},
 	"settings": {
