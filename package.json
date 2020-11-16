@@ -1,6 +1,6 @@
 {
   "name": "@asmodee/werewolf-wechat",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Game Assistant for Werewolves of Miller's Hollow",
   "main": "app.ts",
   "scripts": {
