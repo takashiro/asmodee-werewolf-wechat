@@ -24,7 +24,7 @@ Component({
 	 * 组件的方法列表
 	 */
 	methods: {
-		setValue(newVal) {
+		setValue(newVal: number): void {
 			this.setData({ value: newVal });
 			this.triggerEvent('numberchange', {
 				role: this.data.role,
@@ -32,7 +32,7 @@ Component({
 			});
 		},
 
-		handleInput(e) {
+		handleInput(e: WechatMiniprogram.CustomEvent): void {
 			let num = parseInt(e.detail.value, 10);
 			if (Number.isNaN(num)) {
 				return;

@@ -63,7 +63,7 @@ Component({
 	 * 组件的方法列表
 	 */
 	methods: {
-		updateSeat(e): void {
+		updateSeat(e: WechatMiniprogram.CustomEvent): void {
 			input.seat = parseInt(e.detail.value, 10);
 		},
 
